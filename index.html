@@ -648,19 +648,74 @@ navLogout.onclick=async()=>{
     navLogout.disabled=false;
     navLogout.textContent='Log out';
     authError(error.message);
-    authGate.hidden=false;
     return;
   }
   window.applyPilotSession=null;
+  updateNavAuth(null);
   navLogout.disabled=false;
   navLogout.textContent='Log out';
 };
 let pendingAuthAction=null;
-function setAuthMode(m){authMode=m;const signup=m==='signup';loginTab.classList.toggle('active',!signup);signupTab.classList.toggle('active',signup);authTitle.textContent=signup?'Create your account.':'Welcome back.';authSub.textContent=signup?'Create an account to keep your ApplyPilot workspace private.':'Log in or create an account to continue your request.';authSubmit.textContent=signup?'Create account →':'Log in →';resetPassword.hidden=signup;authNameWrap.hidden=!signup;authName.required=signup;authMsg.textContent='';}
-loginTab.onclick=()=>setAuthMode('login');signupTab.onclick=()=>setAuthMode('signup');
-function authError(msg){authMsg.textContent=msg;authMsg.style.color='var(--mu)';authMsg.style.fontWeight='';authMsg.style.background='';authMsg.style.padding='';authMsg.style.borderRadius='';} function authSuccess(msg){authMsg.textContent=msg;authMsg.style.color='var(--ok)';authMsg.style.fontWeight='600';authMsg.style.background='color-mix(in srgb, var(--ok) 10%, transparent)';authMsg.style.padding='12px';authMsg.style.borderRadius='10px';}
-function closeAuth(){pendingAuthAction=null;authGate.hidden=true;document.body.style.overflow='';authMsg.textContent='';}
-function showAuth(action){if(!sb){authError('Supabase is not configured yet.');authGate.hidden=false;return;}pendingAuthAction=action||null;authGate.hidden=false;document.body.style.overflow='hidden';setAuthMode('login');setTimeout(()=>document.getElementById('authEmail')?.focus(),50);}
+function clearAuthMessage(){
+  authMsg.textContent='';
+  authMsg.style.color='';
+  authMsg.style.fontWeight='';
+  authMsg.style.background='';
+  authMsg.style.padding='';
+  authMsg.style.borderRadius='';
+}
+function setAuthMode(m){
+  authMode=m;
+  const signup=m==='signup';
+  loginTab.classList.toggle('active',!signup);
+  signupTab.classList.toggle('active',signup);
+  authTitle.textContent=signup?'Create your account.':'Welcome back.';
+  authSub.textContent=signup?'Create an account to keep your ApplyPilot workspace private.':'Log in to your ApplyPilot account.';
+  authSubmit.textContent=signup?'Create account →':'Log in →';
+  authSubmit.type='submit';
+  authSubmit.onclick=null;
+  authSubmit.disabled=false;
+  resetPassword.hidden=signup;
+  authNameWrap.hidden=!signup;
+  authName.required=signup;
+  authName.disabled=!signup;
+  if(!signup) authName.value='';
+  clearAuthMessage();
+}
+loginTab.onclick=()=>setAuthMode('login');
+signupTab.onclick=()=>setAuthMode('signup');
+function authError(msg){
+  authMsg.textContent=msg;
+  authMsg.style.color='var(--mu)';
+  authMsg.style.fontWeight='';
+  authMsg.style.background='';
+  authMsg.style.padding='';
+  authMsg.style.borderRadius='';
+}
+function authSuccess(msg){
+  authMsg.textContent=msg;
+  authMsg.style.color='var(--ok)';
+  authMsg.style.fontWeight='600';
+  authMsg.style.background='color-mix(in srgb, var(--ok) 10%, transparent)';
+  authMsg.style.padding='12px';
+  authMsg.style.borderRadius='10px';
+}
+function closeAuth(){
+  pendingAuthAction=null;
+  authGate.hidden=true;
+  document.body.style.overflow='';
+  clearAuthMessage();
+  authSubmit.disabled=false;
+  authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';
+}
+function showAuth(action){
+  if(!sb){authError('Supabase is not configured yet.');authGate.hidden=false;return;}
+  pendingAuthAction=action||null;
+  authGate.hidden=false;
+  document.body.style.overflow='hidden';
+  setAuthMode('login');
+  setTimeout(()=>document.getElementById('authEmail')?.focus(),50);
+}
 document.getElementById('authClose').onclick=closeAuth;
 async function initAuth(){
   if(!sb){updateNavAuth(null);return;}
@@ -673,13 +728,73 @@ async function initAuth(){
     if(session&&pendingAuthAction){
       const action=pendingAuthAction;
       pendingAuthAction=null;
-      authGate.hidden=true;
-      document.body.style.overflow='';
+      closeAuth();
       setTimeout(()=>action(),0);
     }
   });
 }
-authForm.onsubmit=async e=>{e.preventDefault();if(!sb){authError('Supabase is not configured yet.');return;}authSubmit.disabled=true;authSubmit.textContent=authMode==='signup'?'Creating…':'Logging in…';authError('');const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value,name=(document.getElementById('authName')?.value||'').trim();const r=authMode==='signup'?await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname,data:{full_name:name}}}):await sb.auth.signInWithPassword({email,password});if(r.error){authError(r.error.message);authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';return;}if(authMode==='signup'&&!r.data.session){authSuccess('Account created successfully! Please check your email inbox for a confirmation link. After confirming your email, return here and log in.');authSubmit.disabled=false;authSubmit.textContent='Go to log in →';authSubmit.onclick=()=>{authSubmit.onclick=null;setAuthMode('login');};return;}authSubmit.disabled=false;authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';if(r.data.session&&pendingAuthAction){const action=pendingAuthAction;pendingAuthAction=null;authGate.hidden=true;document.body.style.overflow='';setTimeout(()=>action(),0);}};
+authForm.onsubmit=async e=>{
+  e.preventDefault();
+  if(!sb){authError('Supabase is not configured yet.');return;}
+  const isSignup=authMode==='signup';
+  authSubmit.disabled=true;
+  authSubmit.textContent=isSignup?'Creating…':'Logging in…';
+  clearAuthMessage();
+  const email=document.getElementById('authEmail').value.trim();
+  const password=document.getElementById('authPassword').value;
+  const name=(document.getElementById('authName')?.value||'').trim();
+  try{
+    const r=isSignup
+      ?await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname,data:{full_name:name}}})
+      :await sb.auth.signInWithPassword({email,password});
+    if(r.error){
+      const msg=r.error.message||'Something went wrong.';
+      if(isSignup && /already registered|already exists|user already/i.test(msg)){
+        setAuthMode('login');
+        authError('An account with this email already exists. Please log in instead. If you forgot your password, use “Forgot password?”.');
+        document.getElementById('authEmail').value=email;
+        document.getElementById('authEmail').focus();
+      }else if(!isSignup && /invalid login credentials|invalid credentials/i.test(msg)){
+        authError('Email or password is incorrect. Please try again or use “Forgot password?”.');
+      }else{
+        authError(msg);
+      }
+      authSubmit.disabled=false;
+      authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';
+      return;
+    }
+    if(isSignup && !r.data.session){
+      authSuccess('Account created successfully! Please check your email inbox for a confirmation link. After confirming your email, return here and log in.');
+      authSubmit.disabled=false;
+      authSubmit.textContent='Go to log in →';
+      authSubmit.type='button';
+      authSubmit.onclick=()=>{
+        authSubmit.onclick=null;
+        authSubmit.type='submit';
+        setAuthMode('login');
+        document.getElementById('authEmail').value=email;
+        document.getElementById('authPassword').value='';
+        document.getElementById('authPassword').focus();
+      };
+      return;
+    }
+    if(r.data.session){
+      window.applyPilotSession=r.data.session;
+      updateNavAuth(r.data.session);
+      const action=pendingAuthAction;
+      pendingAuthAction=null;
+      closeAuth();
+      if(action)setTimeout(()=>action(),0);
+      return;
+    }
+    authSubmit.disabled=false;
+    authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';
+  }catch(err){
+    authError(err?.message||'Something went wrong. Please try again.');
+    authSubmit.disabled=false;
+    authSubmit.textContent=authMode==='signup'?'Create account →':'Log in →';
+  }
+};
 resetPassword.onclick=async()=>{if(!sb){authError('Supabase is not configured yet.');return;}const email=document.getElementById('authEmail').value.trim();if(!email){authError('Enter your email first.');return;}const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});authError(error?error.message:'Password reset email sent.');};
 initAuth();
 </script>
