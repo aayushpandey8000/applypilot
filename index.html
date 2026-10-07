@@ -621,7 +621,7 @@ canvas {
 <script>
 const SUPABASE_URL='https://njvabytquqnowvtyrlxu.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_EcGzO8KtXRKeN6o6IPi9yg_YgQYpzvP';
-const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce'}}):null;
 const authGate=document.getElementById('authGate'),authForm=document.getElementById('authForm'),authMsg=document.getElementById('authMsg'),authTitle=document.getElementById('authTitle'),authSub=document.getElementById('authSub'),authSubmit=document.getElementById('authSubmit'),loginTab=document.getElementById('loginTab'),signupTab=document.getElementById('signupTab'),resetPassword=document.getElementById('resetPassword');
 const navLogin=document.getElementById('navLogin'),navLogout=document.getElementById('navLogout');
 const authLoading=document.getElementById('authLoading'),authLoadingTitle=document.getElementById('authLoadingTitle'),authLoadingSub=document.getElementById('authLoadingSub');
@@ -801,33 +801,42 @@ document.getElementById('authClose').onclick=closeAuth;
 const googleAuth=document.getElementById('googleAuth');
 googleAuth.onclick=async()=>{
   if(authTransitioning)return;
+  if(!sb){authError('Authentication service is unavailable. Please refresh the page and try again.');return;}
   clearAuthMessage();
-  if(!window.supabase||!sb){
-    authError('Authentication service is not available. Please refresh the page and try again.');
-    return;
-  }
   googleAuth.disabled=true;
   showAuthLoading('Connecting to Google','You’ll be redirected to Google securely.');
   try{
     const redirectTo=window.location.origin+window.location.pathname;
-    const {data,error}=await sb.auth.signInWithOAuth({
-      provider:'google',
-      options:{redirectTo}
-    });
+    const {data,error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo}});
     if(error)throw error;
-    if(data?.url){
-      window.location.assign(data.url);
-      return;
-    }
-    throw new Error('Google sign-in did not return a redirect URL. Please check your Supabase Google provider configuration.');
-  }catch(error){
+    if(data?.url){window.location.assign(data.url);return;}
+    throw new Error('Google sign-in could not start. Please try again.');
+  }catch(err){
     hideAuthLoading();
     googleAuth.disabled=false;
-    authError(error?.message||'Unable to start Google sign-in. Please try again.');
+    authError(err?.message||'Google sign-in could not start. Please try again.');
   }
 };
 async function initAuth(){
   if(!sb){updateNavAuth(null);return;}
+  try{
+    const url=new URL(window.location.href);
+    const code=url.searchParams.get('code');
+    if(code){
+      showAuthLoading('Finishing Google sign-in','Securing your Jobnora session…');
+      const {error}=await sb.auth.exchangeCodeForSession(code);
+      if(error)throw error;
+      url.searchParams.delete('code');
+      url.searchParams.delete('state');
+      url.searchParams.delete('sb_flow_id');
+      window.history.replaceState({},document.title,url.pathname+(url.search?url.search:'')+url.hash);
+      hideAuthLoading();
+    }
+  }catch(err){
+    hideAuthLoading();
+    authError(err?.message||'Google sign-in could not be completed. Please try again.');
+    try{history.replaceState({},document.title,location.pathname);}catch(e){}
+  }
   const {data:{session}}=await sb.auth.getSession();
   window.applyPilotSession=session||null;
   updateNavAuth(session);
