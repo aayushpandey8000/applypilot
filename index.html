@@ -793,11 +793,11 @@ async function initAuth(){
   const {data:{session}}=await sb.auth.getSession();
   window.applyPilotSession=session||null;
   updateNavAuth(session);
-  if(session) setupAuthChannel(session.user);
+  if(session){setupAuthChannel(session.user);loadSavedResume();}
   sb.auth.onAuthStateChange((_event,session)=>{
     window.applyPilotSession=session||null;
     updateNavAuth(session);
-    if(session) setupAuthChannel(session.user);
+    if(session){setupAuthChannel(session.user);loadSavedResume();}
     else if(authChannel){try{sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
     // The explicit login handler owns the post-login transition.
     // Do not execute pending actions from onAuthStateChange, otherwise the
@@ -928,53 +928,107 @@ function start(){
 }
 function submitWithAuth(action){if(window.applyPilotSession?.user?.id){action();return;}showAuth(action);}
 
+
+async function getLoggedInUser(){
+  if(!sb)return null;
+  try{const {data:{user}}=await sb.auth.getUser();return user||null;}catch(e){return window.applyPilotSession?.user||null;}
+}
+function savedResumePath(userId,ext){return `${userId}/resume.${ext}`;}
+async function loadSavedResume(){
+  window.jobnoraSavedResume=null;
+  const user=await getLoggedInUser();
+  if(!user?.id||!sb)return null;
+  const bucket=sb.storage.from('jobnora-resumes');
+  for(const ext of ['pdf','tex']){
+    try{
+      const {data,error}=await bucket.download(savedResumePath(user.id,ext));
+      if(!error&&data){
+        const type=ext==='tex'?'text/x-tex':'application/pdf';
+        const file=new File([data],`resume.${ext}`,{type,lastModified:Date.now()});
+        window.jobnoraSavedResume=file;
+        return file;
+      }
+    }catch(e){}
+  }
+  return null;
+}
+async function saveResumeForUser(file){
+  const user=await getLoggedInUser();
+  if(!user?.id||!sb||!file)return null;
+  const ext=file.name.toLowerCase().endsWith('.tex')?'tex':'pdf';
+  const bucket=sb.storage.from('jobnora-resumes');
+  const path=savedResumePath(user.id,ext);
+  const other=ext==='pdf'?'tex':'pdf';
+  const {error}=await bucket.upload(path,file,{upsert:true,contentType:file.type||(ext==='tex'?'text/x-tex':'application/pdf'),cacheControl:'3600'});
+  if(error)throw error;
+  try{await bucket.remove([savedResumePath(user.id,other)]);}catch(e){}
+  window.jobnoraSavedResume=file;
+  return file;
+}
+async function hydrateResumeField(form){
+  const emailInput=form?.elements?.email;
+  const resumeInput=form?.elements?.resume;
+  const status=form?.querySelector('[data-resume-status]');
+  const user=await getLoggedInUser();
+  if(emailInput&&user?.email){emailInput.value=user.email;emailInput.readOnly=true;emailInput.setAttribute('aria-readonly','true');}
+  const saved=await loadSavedResume();
+  if(status){
+    status.textContent=saved?`✓ Saved resume ready: ${saved.name} — you can use it without uploading again.`:'No saved resume yet. Upload your resume once and Jobnora will remember it for your next login.';
+    status.style.color=saved?'var(--ok)':'var(--mu)';
+  }
+  if(resumeInput){
+    resumeInput.required=!saved;
+    resumeInput.onchange=async()=>{
+      const file=resumeInput.files?.[0];
+      if(!file)return;
+      if(status)status.textContent='Saving your new resume…';
+      try{await saveResumeForUser(file);if(status)status.textContent=`✓ Resume saved: ${file.name}`;resumeInput.required=false;}
+      catch(e){if(status)status.textContent='Could not save the resume. Please try again.';resumeInput.required=!window.jobnoraSavedResume;}
+    };
+  }
+  return saved;
+}
+
 function resumeFlow(){
   open("Resume Maker",`
     <div class="flow-head"><span class="eyebrow">Resume Maker</span>
     <h2 style="font-size:1.8rem">Get an ATS resume for one job.</h2>
-    <p class="lead" style="margin-top:12px">Give us the job link or paste the job description. Your tailored ATS resume will be delivered to your email.</p></div>
+    <p class="lead" style="margin-top:12px">Your account email and saved resume are filled automatically. Upload a new resume only when you want to replace the saved one.</p></div>
     <div class="flow-note"><b>Flow:</b> Job link / JD → AI tailoring → ATS resume → Email</div>
     <form class="flow-form" id="resumeFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
       <label>Job link <span style="color:var(--mu);font-weight:400">(optional if you paste the JD)</span><input type="url" name="jobLink" placeholder="https://company.com/jobs/..."></label>
       <label>Job description <span style="color:var(--mu);font-weight:400">(optional if you provide a job link)</span><textarea name="jobDescription" placeholder="Paste the job description here if you have it..."></textarea></label>
-      <label>Your resume<input type="file" name="resume" accept=".pdf,.tex" required></label>
+      <label>Your resume<input type="file" name="resume" accept=".pdf,.tex"></label>
+      <p data-resume-status style="font-size:.8rem;margin-top:-8px">Checking your saved resume…</p>
       <button class="btn a flow-submit" type="submit">Create my ATS resume →</button>
-      <p style="font-size:.78rem;color:var(--mu)">The existing Jobnora processing workflow handles the final resume generation and email delivery.</p>
+      <p style="font-size:.78rem;color:var(--mu)">Your saved resume is private to your account and is reused automatically.</p>
     </form>`,false);
-  $("#resumeFlowForm").onsubmit=e=>{e.preventDefault();const form=e.currentTarget;submitWithAuth(()=>resumeSubmit(form));};
+  const form=$("#resumeFlowForm");
+  hydrateResumeField(form);
+  form.onsubmit=e=>{e.preventDefault();submitWithAuth(()=>resumeSubmit(form));};
   async function resumeSubmit(f){
     const b=f.querySelector(".flow-submit");
     if(!f.elements.jobLink.value.trim() && !f.elements.jobDescription.value.trim()){
-      f.elements.jobDescription.focus();
-      f.elements.jobDescription.setCustomValidity("Add a job link or paste a job description.");
-      f.reportValidity();
-      f.elements.jobDescription.setCustomValidity("");
-      return;
+      f.elements.jobDescription.focus();f.elements.jobDescription.setCustomValidity("Add a job link or paste a job description.");f.reportValidity();f.elements.jobDescription.setCustomValidity("");return;
     }
-    const fd=new FormData();
-    fd.append("mode","resume");
-    fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
-    fd.append("job_url",f.elements.jobLink.value.trim());
-    fd.append("job_description",f.elements.jobDescription.value.trim());
-    if(f.elements.resume.files[0]) fd.append("resume_file",f.elements.resume.files[0]);
-    b.disabled=true; b.textContent="Sending request…";
-    try{
-      const r=await fetch(FORM,{method:"POST",body:fd});
-      if(!r.ok) throw new Error("Request failed");
-      showFlowSubmitted("Resume request received","Your request has been sent to Jobnora. The tailored ATS resume will be emailed to you when processing is complete.");
-    }catch(err){
-      b.disabled=false; b.textContent="Create my ATS resume →";
-      showFlowSubmitted("Something went wrong","We couldn't send your request right now. Please try again in a moment.");
-    }
+    const selected=f.elements.resume.files?.[0];
+    if(selected){try{await saveResumeForUser(selected);}catch(err){showFlowSubmitted("Resume could not be saved","Please check your connection and try uploading the resume again.");return;}}
+    const resumeFile=selected||window.jobnoraSavedResume;
+    if(!resumeFile){f.elements.resume.required=true;f.elements.resume.focus();f.reportValidity();return;}
+    const fd=new FormData();fd.append("mode","resume");fd.append("email",f.elements.email.value.trim());
+    if(window.applyPilotSession?.user?.id)fd.append("user_id",window.applyPilotSession.user.id);
+    fd.append("job_url",f.elements.jobLink.value.trim());fd.append("job_description",f.elements.jobDescription.value.trim());fd.append("resume_file",resumeFile,resumeFile.name);
+    b.disabled=true;b.textContent="Sending request…";
+    try{const r=await fetch(FORM,{method:"POST",body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Resume request received","Your request has been sent to Jobnora. The tailored ATS resume will be emailed to you when processing is complete.");}
+    catch(err){b.disabled=false;b.textContent="Create my ATS resume →";showFlowSubmitted("Something went wrong","We couldn't send your request right now. Please try again in a moment.");}
   }
 }
 function advancedFlow(){
   open("Advanced Mode",`
     <div class="flow-head"><span class="eyebrow">Advanced Mode</span>
     <h2 style="font-size:1.8rem">Find jobs and get tailored resumes.</h2>
-    <p class="lead" style="margin-top:12px">Tell Jobnora what you're looking for. Matching job links and ATS resumes are sent to your email.</p></div>
+    <p class="lead" style="margin-top:12px">Your account email and saved resume are filled automatically.</p></div>
     <div class="flow-note"><b>Flow:</b> Your details → Job discovery → Matching job links + ATS resumes → Email</div>
     <form class="flow-form" id="advancedFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
@@ -989,35 +1043,24 @@ function advancedFlow(){
         <label>Maximum jobs<input type="number" name="maxJobs" min="1" max="50" step="1" value="5" placeholder="e.g. 5" required></label>
       </div>
       <label>Search window (hours)<input type="number" name="searchWindow" min="1" max="720" step="1" value="24" placeholder="e.g. 24" required></label>
-      <label>Your resume<input type="file" name="resume" accept=".pdf,.tex" required></label>
+      <label>Your resume<input type="file" name="resume" accept=".pdf,.tex"></label>
+      <p data-resume-status style="font-size:.8rem;margin-top:-8px">Checking your saved resume…</p>
       <button class="btn a flow-submit" type="submit">Find my jobs →</button>
       <p style="font-size:.78rem;color:var(--mu)">Matching job links and tailored ATS resumes will be delivered to your email.</p>
     </form>`,false);
-  $("#advancedFlowForm").onsubmit=e=>{e.preventDefault();const form=e.currentTarget;submitWithAuth(()=>advancedSubmit(form));};
+  const form=$("#advancedFlowForm");hydrateResumeField(form);
+  form.onsubmit=e=>{e.preventDefault();submitWithAuth(()=>advancedSubmit(form));};
   async function advancedSubmit(f){
-    const b=f.querySelector(".flow-submit");
-    const fd=new FormData();
-    fd.append("mode","advanced");
-    fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
-    fd.append("job_sources",JSON.stringify(["linkedin"]));
-    fd.append("job_titles",f.elements.role.value.trim());
-    fd.append("location",f.elements.location.value.trim());
-    fd.append("work_type",f.elements.workType.value || "Any");
-    fd.append("experience",f.elements.experience.value.trim());
-    fd.append("max_jobs",f.elements.maxJobs.value);
-    fd.append("search_window",f.elements.searchWindow.value);
-    if(f.elements.resume.files[0]) fd.append("resume_file",f.elements.resume.files[0]);
-    b.disabled=true; b.textContent="Starting search…";
-    try{
-      const r=await fetch(FORM,{method:"POST",body:fd});
-      if(!r.ok) throw new Error("Request failed");
-      showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");
-    }catch(err){
-      b.disabled=false; b.textContent="Find my jobs →";
-      showFlowSubmitted("Something went wrong","We couldn't start your search right now. Please try again in a moment.");
-    }
-  };
+    const b=f.querySelector(".flow-submit");const selected=f.elements.resume.files?.[0];
+    if(selected){try{await saveResumeForUser(selected);}catch(err){showFlowSubmitted("Resume could not be saved","Please check your connection and try uploading the resume again.");return;}}
+    const resumeFile=selected||window.jobnoraSavedResume;if(!resumeFile){f.elements.resume.required=true;f.elements.resume.focus();f.reportValidity();return;}
+    const fd=new FormData();fd.append("mode","advanced");fd.append("email",f.elements.email.value.trim());
+    if(window.applyPilotSession?.user?.id)fd.append("user_id",window.applyPilotSession.user.id);
+    fd.append("job_sources",JSON.stringify(["linkedin"]));fd.append("job_titles",f.elements.role.value.trim());fd.append("location",f.elements.location.value.trim());fd.append("work_type",f.elements.workType.value||"Any");fd.append("experience",f.elements.experience.value.trim());fd.append("max_jobs",f.elements.maxJobs.value);fd.append("search_window",f.elements.searchWindow.value);fd.append("resume_file",resumeFile,resumeFile.name);
+    b.disabled=true;b.textContent="Starting search…";
+    try{const r=await fetch(FORM,{method:"POST",body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");}
+    catch(err){b.disabled=false;b.textContent="Find my jobs →";showFlowSubmitted("Something went wrong","We couldn't start your search right now. Please try again in a moment.");}
+  }
 }
 function showFlowSubmitted(title,msg){
   open(title,`<div class="flow-success"><span class="eyebrow">Request submitted</span><h3>${title}</h3><p>${msg}</p>
