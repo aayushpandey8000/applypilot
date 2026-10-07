@@ -983,17 +983,6 @@ function advancedFlow(){
     <form class="flow-form" id="advancedFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
       <label>Target job title<input type="text" name="role" placeholder="e.g. Product Manager" required></label>
-      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px">
-        <legend style="font-size:.84rem;font-weight:500">Job sources</legend>
-        <p style="font-size:.78rem;color:var(--mu);margin:0 0 2px">Choose where Jobnora should search. Select one or multiple.</p>
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
-          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="linkedin" checked> LinkedIn</label>
-          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="greenhouse"> Greenhouse</label>
-          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="lever"> Lever</label>
-          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="wellfound"> Wellfound</label>
-        </div>
-        <label style="display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:400"><input type="checkbox" id="selectAllJobSources"> Select all</label>
-      </fieldset>
       <div class="two">
         <label>Preferred location<input type="text" name="location" placeholder="Remote / Delhi / Bengaluru"></label>
         <label>Work type<select name="workType"><option value="">Any</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
@@ -1007,10 +996,6 @@ function advancedFlow(){
       <button class="btn a flow-submit" type="submit">Find my jobs →</button>
       <p style="font-size:.78rem;color:var(--mu)">Matching job links and tailored ATS resumes will be delivered to your email.</p>
     </form>`,false);
-  const sourceBoxes=[...document.querySelectorAll('#advancedFlowForm input[name="jobSources"]')];
-  const selectAllSources=document.querySelector('#selectAllJobSources');
-  selectAllSources.onchange=()=>sourceBoxes.forEach(x=>x.checked=selectAllSources.checked);
-  sourceBoxes.forEach(x=>x.onchange=()=>{selectAllSources.checked=sourceBoxes.every(y=>y.checked);});
   $("#advancedFlowForm").onsubmit=e=>{e.preventDefault();const form=e.currentTarget;submitWithAuth(()=>advancedSubmit(form));};
   async function advancedSubmit(f){
     const b=f.querySelector(".flow-submit");
@@ -1018,9 +1003,6 @@ function advancedFlow(){
     fd.append("mode","advanced");
     fd.append("email",f.elements.email.value.trim());
     if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
-    const selectedSources=[...f.querySelectorAll('input[name="jobSources"]:checked')].map(x=>x.value);
-    if(!selectedSources.length){showFlowSubmitted("Choose a job source","Select at least one job source before starting your search.");return;}
-    fd.append("job_sources",JSON.stringify(selectedSources));
     fd.append("job_titles",f.elements.role.value.trim());
     fd.append("location",f.elements.location.value.trim());
     fd.append("work_type",f.elements.workType.value || "Any");
