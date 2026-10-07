@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FAFAF8;--bg2:#fff;--tx:#111;--mu:#666;--bd:#E8E8E4;--ac:#4F46E5;--acs:#EEF0FF;--ok:#16A34A;--oks:#E8F6EC;--sh:0 1px 2px rgba(0,0,0,.04),0 12px 32px -12px rgba(0,0,0,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#0C0C0E;--bg2:#151518;--tx:#F4F4F2;--mu:#9A9AA2;--bd:#26262B;--ac:#8B8FFF;--acs:#1B1C3A;--ok:#4ADE80;--oks:#12281A;--sh:0 12px 32px -12px rgba(0,0,0,.6);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C0C0E;--bg2:#151518;--tx:#F4F4F2;--mu:#9A9AA2;--bd:#26262B;--ac:#8B8FFF;--acs:#1B1C3A;--ok:#4ADE80;--oks:#12281A;--sh:0 12px 32px -12px rgba(0,0,0,.6)}}
 :root[data-theme="dark"]{--bg:#0C0C0E;--bg2:#151518;--tx:#F4F4F2;--mu:#9A9AA2;--bd:#26262B;--ac:#8B8FFF;--acs:#1B1C3A;--ok:#4ADE80;--oks:#12281A;--sh:0 12px 32px -12px rgba(0,0,0,.6)}
 *,*:before,*:after{box-sizing:border-box}html{height:100%;scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
@@ -511,13 +511,17 @@ canvas {
 @media(max-width:760px){.mode-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.mode-section{padding-top:24px;padding-bottom:70px}.mode-card{padding:21px}.flow-form .two{grid-template-columns:1fr}}
 
+
+:root[data-theme="light"]{--bg:#F7F7F8;--bg2:#FFFFFF;--tx:#18181B;--mu:#666872;--bd:#E4E4E7;--ac:#6366F1;--acs:#EEF0FF;--ok:#16A34A;--oks:#ECFDF3;--sh:0 12px 32px -12px rgba(0,0,0,.12);color-scheme:light}
+.theme-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);border-radius:999px;padding:7px 11px;font-size:.78rem;font-weight:500;white-space:nowrap;transition:.2s}.theme-toggle:hover{border-color:var(--ac);transform:translateY(-1px)}.theme-icon{font-size:.9rem;line-height:1}.theme-label{min-width:34px;text-align:left}
+@media(max-width:860px){.theme-toggle{padding:7px 9px}.theme-label{display:none}}
 </style>
-</head>
+<script>(function(){try{var t=localStorage.getItem("jobnora-theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();</script></head>
 <body>
 <div id="pg"></div><nav id="nav"><div class="w nv">
 <a href="#top" class="lg" aria-label="Jobnora home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Jobnora</a>
 <div class="nl"><a href="#modes">How it works</a><a href="#resume">Tailoring</a><a href="#jobs">Matches</a><a href="#privacy">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
-<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="btn p sm" data-start>Choose your mode</button></div></nav>
+<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme"><span class="theme-icon" id="themeIcon">☀</span><span class="theme-label" id="themeLabel">Light</span></button><button class="btn p sm" data-start>Choose your mode</button></div></nav>
 
 <header class="hero" id="top"><div class="grid-bg"></div><div class="w">
 <span class="pill"><i class="dot"></i>Your agent is searching 12 sources right now</span>
@@ -883,6 +887,11 @@ initAuth();
 </script>
 <script>
 const FORM="https://spidey2.app.n8n.cloud/webhook/applypilot-submit";
+const themeToggle=document.getElementById("themeToggle"),themeIcon=document.getElementById("themeIcon"),themeLabel=document.getElementById("themeLabel");
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);try{localStorage.setItem("jobnora-theme",t)}catch(e){}const light=t==="light";if(themeToggle){themeToggle.setAttribute("aria-label",light?"Switch to dark theme":"Switch to light theme");themeIcon.textContent=light?"☾":"☀";themeLabel.textContent=light?"Dark":"Light"}}
+applyTheme(document.documentElement.getAttribute("data-theme")==="light"?"light":"dark");
+themeToggle?.addEventListener("click",()=>applyTheme(document.documentElement.getAttribute("data-theme")==="light"?"dark":"light"));
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const J=[["Senior Product Manager","Stripe","Remote","$170k–$210k",96,["Roadmapping","Payments","SQL"],"Applied",["Remote","Best"]],["Product Manager","Airbnb","San Francisco / Hybrid","$155k–$190k",92,["Experimentation","Marketplaces","Analytics"],"Review",["Best"]],["Growth Product Manager","Notion","Remote","$145k–$180k",89,["Growth","A/B testing","PLG"],"Review",["Remote"]],["Senior PM","Ramp","New York / Hybrid","$165k–$200k",87,["Fintech","B2B SaaS","Strategy"],"Saved",[]]];
 const F=["All","Best matches","Remote","Applied","Needs review"];
@@ -983,6 +992,17 @@ function advancedFlow(){
     <form class="flow-form" id="advancedFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
       <label>Target job title<input type="text" name="role" placeholder="e.g. Product Manager" required></label>
+      <fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px">
+        <legend style="font-size:.84rem;font-weight:500">Job sources</legend>
+        <p style="font-size:.78rem;color:var(--mu);margin:0 0 2px">Choose where Jobnora should search. Select one or multiple.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="linkedin" checked> LinkedIn</label>
+          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="greenhouse"> Greenhouse</label>
+          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="lever"> Lever</label>
+          <label style="display:flex;align-items:center;gap:8px;border:1px solid var(--bd);border-radius:10px;padding:10px;cursor:pointer;font-weight:400"><input type="checkbox" name="jobSources" value="wellfound"> Wellfound</label>
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:400"><input type="checkbox" id="selectAllJobSources"> Select all</label>
+      </fieldset>
       <div class="two">
         <label>Preferred location<input type="text" name="location" placeholder="Remote / Delhi / Bengaluru"></label>
         <label>Work type<select name="workType"><option value="">Any</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
@@ -996,6 +1016,10 @@ function advancedFlow(){
       <button class="btn a flow-submit" type="submit">Find my jobs →</button>
       <p style="font-size:.78rem;color:var(--mu)">Matching job links and tailored ATS resumes will be delivered to your email.</p>
     </form>`,false);
+  const sourceBoxes=[...document.querySelectorAll('#advancedFlowForm input[name="jobSources"]')];
+  const selectAllSources=document.querySelector('#selectAllJobSources');
+  selectAllSources.onchange=()=>sourceBoxes.forEach(x=>x.checked=selectAllSources.checked);
+  sourceBoxes.forEach(x=>x.onchange=()=>{selectAllSources.checked=sourceBoxes.every(y=>y.checked);});
   $("#advancedFlowForm").onsubmit=e=>{e.preventDefault();const form=e.currentTarget;submitWithAuth(()=>advancedSubmit(form));};
   async function advancedSubmit(f){
     const b=f.querySelector(".flow-submit");
@@ -1003,6 +1027,9 @@ function advancedFlow(){
     fd.append("mode","advanced");
     fd.append("email",f.elements.email.value.trim());
     if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
+    const selectedSources=[...f.querySelectorAll('input[name="jobSources"]:checked')].map(x=>x.value);
+    if(!selectedSources.length){showFlowSubmitted("Choose a job source","Select at least one job source before starting your search.");return;}
+    fd.append("job_sources",JSON.stringify(selectedSources));
     fd.append("job_titles",f.elements.role.value.trim());
     fd.append("location",f.elements.location.value.trim());
     fd.append("work_type",f.elements.workType.value || "Any");
