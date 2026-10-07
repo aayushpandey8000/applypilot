@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ApplyPilot — Your AI agent for the entire job search</title>
+<title>Jobnora — Your AI agent for the entire job search</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -515,14 +515,14 @@ canvas {
 </head>
 <body>
 <div id="pg"></div><nav id="nav"><div class="w nv">
-<a href="#top" class="lg" aria-label="ApplyPilot home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>ApplyPilot</a>
+<a href="#top" class="lg" aria-label="Jobnora home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Jobnora</a>
 <div class="nl"><a href="#modes">How it works</a><a href="#resume">Tailoring</a><a href="#jobs">Matches</a><a href="#privacy">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
 <div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="btn p sm" data-start>Choose your mode</button></div></nav>
 
 <header class="hero" id="top"><div class="grid-bg"></div><div class="w">
 <span class="pill"><i class="dot"></i>Your agent is searching 12 sources right now</span>
 <h1>Your AI agent for the<br><span class="gt">entire job search.</span></h1>
-<p class="lead">ApplyPilot discovers roles that match your goals, scores your fit, tailors your resume for every role, and automates the repetitive work behind every application.</p>
+<p class="lead">Jobnora discovers roles that match your goals, scores your fit, tailors your resume for every role, and automates the repetitive work behind every application.</p>
 <div class="cta"><button class="btn a" data-start>Choose your mode →</button><a class="btn" href="#how">See how it works</a></div>
 <div class="card jm" aria-label="Sample job match">
 <div class="row"><div><span class="tag">JOB MATCH</span><h3 style="font-size:1.25rem;margin-top:6px">Senior Product Designer</h3><p style="font-size:.9rem">Acme Inc.</p></div><span class="sc"><span data-c="94">0</span>% Match</span></div>
@@ -538,20 +538,20 @@ canvas {
   <div class="w">
     <div class="rv">
       <span class="eyebrow">Choose your workflow</span>
-      <h2>Two ways to use ApplyPilot.</h2>
-      <p class="lead">Get an ATS-ready resume for one role, or let ApplyPilot find matching roles and send the results to your email.</p>
+      <h2>Two ways to use Jobnora.</h2>
+      <p class="lead">Get an ATS-ready resume for one role, or let Jobnora find matching roles and send the results to your email.</p>
     </div>
     <div class="mode-grid">
       <button class="mode-card card" data-mode="resume">
         <span class="mode-icon">01</span><span class="mode-label">Resume Maker</span>
         <h3>Give us a job link or job description.</h3>
-        <p>ApplyPilot creates an ATS-optimized resume tailored to that role and sends the finished resume to your email.</p>
+        <p>Jobnora creates an ATS-optimized resume tailored to that role and sends the finished resume to your email.</p>
         <span class="mode-flow">Job link / JD → ATS resume → Email</span><span class="mode-action">Use Resume Maker →</span>
       </button>
       <button class="mode-card card" data-mode="advanced">
         <span class="mode-icon">02</span><span class="mode-label">Advanced Mode</span>
         <h3>Tell us what jobs you're looking for.</h3>
-        <p>ApplyPilot finds relevant jobs and sends the job links together with tailored ATS resumes to your email.</p>
+        <p>Jobnora finds relevant jobs and sends the job links together with tailored ATS resumes to your email.</p>
         <span class="mode-flow">Your details → Job matches + ATS resumes → Email</span><span class="mode-action">Use Advanced Mode →</span>
       </button>
     </div>
@@ -562,7 +562,7 @@ canvas {
 <div class="flow" id="flow"></div></div></section>
 
 <section id="resume" style="background:var(--bg2);border-block:1px solid var(--bd)"><div class="w split">
-<div class="rv"><span class="eyebrow">Tailored resumes</span><h2>Stop sending the same resume everywhere.</h2><p class="lead">ApplyPilot understands what each company is looking for and adapts your resume around the experience and skills that matter most. You review every change before it goes out.</p></div>
+<div class="rv"><span class="eyebrow">Tailored resumes</span><h2>Stop sending the same resume everywhere.</h2><p class="lead">Jobnora understands what each company is looking for and adapts your resume around the experience and skills that matter most. You review every change before it goes out.</p></div>
 <div class="cmp rv" id="cmp"><div class="card doc" style="box-shadow:none"><h3>Original resume</h3><b>Alex Morgan</b><ul><li>Project management for product teams</li><li>Worked on design systems</li><li>Did user interviews</li></ul></div>
 <div class="card doc t"><h3 style="color:var(--ac)">Tailored for Acme</h3><b>Alex Morgan</b><ul><li><mark class="off" data-t="Led cross-functional product launches">Project management</mark> across 4 product teams</li><li>Scaled a <mark class="off" data-t="Design Systems">design system</mark> used by 30+ designers</li><li>Ran <mark class="off" data-t="User Research">user research</mark> to shape product strategy</li></ul></div></div></div></section>
 
@@ -572,7 +572,7 @@ canvas {
 <section style="padding-top:0"><div class="w"><div class="fit">
 <div class="card rv"><span class="tag">AI FIT ANALYSIS · FIT SCORE</span><div class="big" style="margin-top:14px"><span data-c="94">0</span>%</div><p style="color:var(--ok);margin-top:6px">Strong match</p>
 <div class="m5" id="m5"></div></div>
-<div class="card rv"><h3>Why you're a strong match</h3><ul class="ul"><li>7/8 required skills</li><li>5 years relevant experience</li><li>Remote preference matches</li><li>Salary range matches</li></ul><h3>Potential gaps</h3><ul class="ul g"><li>SQL experience not clearly demonstrated</li><li>B2B SaaS experience could be emphasized</li></ul><p style="font-size:.88rem;border-top:1px solid var(--bd);padding-top:16px">ApplyPilot flags gaps instead of applying blindly. Low-fit roles never reach the application stage.</p></div></div></div></section>
+<div class="card rv"><h3>Why you're a strong match</h3><ul class="ul"><li>7/8 required skills</li><li>5 years relevant experience</li><li>Remote preference matches</li><li>Salary range matches</li></ul><h3>Potential gaps</h3><ul class="ul g"><li>SQL experience not clearly demonstrated</li><li>B2B SaaS experience could be emphasized</li></ul><p style="font-size:.88rem;border-top:1px solid var(--bd);padding-top:16px">Jobnora flags gaps instead of applying blindly. Low-fit roles never reach the application stage.</p></div></div></div></section>
 
 <section style="padding-top:0"><div class="w"><div class="rv"><span class="eyebrow">Application tracker</span><h2>Every application, one pipeline.</h2></div><div class="kan rv" id="kan"></div></div></section>
 
@@ -581,8 +581,8 @@ canvas {
 <section id="faq"><div class="w" style="max-width:760px"><h2 class="rv">Questions, answered.</h2><div style="margin-top:32px" id="fq"></div></div></section>
 
 <section style="padding-top:0"><div class="w"><div class="fin"><h2 style="max-width:700px;margin:0 auto">Your next opportunity shouldn't require hundreds of tabs.</h2><p>Let AI handle the repetitive work while you focus on getting hired.</p><button class="btn" data-start>Start automating →</button></div></div></section>
-<section id="contact" style="background:var(--bg2);border-block:1px solid var(--bd)"><div class="w"><div class="rv"><span class="eyebrow">Contact</span><h2>Have a question or need help?</h2><p class="lead">Reach the ApplyPilot team and we'll get back to you.</p></div><div class="card rv" style="max-width:620px;margin-top:28px;padding:28px"><div style="font-size:.82rem;color:var(--mu);margin-bottom:8px">Email</div><a href="mailto:spideyai0007@gmail.com" style="font-size:1.15rem;font-weight:600;color:var(--tx);text-decoration:none">spideyai0007@gmail.com</a></div></div></section>
-<footer><div class="w"><span>© 2026 ApplyPilot</span><span>Developed with ❤️ by Team ApplyPilot</span></div></footer>
+<section id="contact" style="background:var(--bg2);border-block:1px solid var(--bd)"><div class="w"><div class="rv"><span class="eyebrow">Contact</span><h2>Have a question or need help?</h2><p class="lead">Reach the Jobnora team and we'll get back to you.</p></div><div class="card rv" style="max-width:620px;margin-top:28px;padding:28px"><div style="font-size:.82rem;color:var(--mu);margin-bottom:8px">Email</div><a href="mailto:spideyai0007@gmail.com" style="font-size:1.15rem;font-weight:600;color:var(--tx);text-decoration:none">spideyai0007@gmail.com</a></div></div></section>
+<footer><div class="w"><span>© 2026 Jobnora</span><span>Developed with ❤️ by Team Jobnora</span></div></footer>
 
 <div id="ov"></div>
 <aside id="dr" role="dialog" aria-modal="true" aria-label="Details" aria-hidden="true"><div class="dh"><strong id="dt">Details</strong><div style="display:flex;gap:8px"><button class="btn sm" id="ext" hidden>Open externally ↗</button><button class="btn sm" id="cl" aria-label="Close">Close</button></div></div><div class="db" id="dbd"></div></aside>
@@ -595,7 +595,7 @@ canvas {
 <div id="authGate" hidden>
   <div class="auth-box card" style="position:relative">
     <button type="button" class="btn sm auth-close" id="authClose" aria-label="Close">×</button>
-    <div class="auth-brand"><span class="lm">A</span> ApplyPilot</div>
+    <div class="auth-brand"><span class="lm">A</span> Jobnora</div>
     <span class="eyebrow">Your private workspace</span>
     <h2 id="authTitle">Welcome back.</h2>
     <p id="authSub" class="lead" style="font-size:.95rem;margin-top:10px">Log in or create an account to continue your request.</p>
@@ -619,6 +619,7 @@ const authGate=document.getElementById('authGate'),authForm=document.getElementB
 const navLogin=document.getElementById('navLogin'),navLogout=document.getElementById('navLogout');
 const authLoading=document.getElementById('authLoading'),authLoadingTitle=document.getElementById('authLoadingTitle'),authLoadingSub=document.getElementById('authLoadingSub');
 let authTransitioning=false;
+let authChannel=null;
 
 let authMode='login';
 const navUserName=document.getElementById('navUserName'),authNameWrap=document.getElementById('authNameWrap'),authName=document.getElementById('authName');
@@ -645,6 +646,39 @@ function updateNavAuth(session){
   }
 }
 navLogin.onclick=()=>showAuth(null);
+async function setupAuthChannel(user){
+  if(!sb||!user?.id)return;
+  if(authChannel){try{await sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
+  authChannel=sb.channel('Jobnora-auth-'+user.id);
+  authChannel.on('broadcast',{event:'global-logout'},async()=>{
+    window.JobnoraSession=null;
+    updateNavAuth(null);
+    try{await sb.auth.signOut({scope:'local'});}catch(e){}
+    if(!authGate.hidden){
+      hideAuthLoading();
+      authGate.hidden=true;
+      document.body.style.overflow='';
+    }
+  });
+  await authChannel.subscribe();
+}
+
+async function checkRemoteSession(){
+  if(!sb)return;
+  const {data:{user},error}=await sb.auth.getUser();
+  if(error||!user){
+    window.JobnoraSession=null;
+    updateNavAuth(null);
+    try{await sb.auth.signOut({scope:'local'});}catch(e){}
+    if(!authGate.hidden){
+      hideAuthLoading();
+      authGate.hidden=true;
+      document.body.style.overflow='';
+    }
+    if(authChannel){try{await sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
+  }
+}
+
 navLogout.onclick=async()=>{
   if(!sb||authTransitioning)return;
   navLogout.disabled=true;
@@ -652,6 +686,7 @@ navLogout.onclick=async()=>{
   authGate.hidden=false;
   document.body.style.overflow='hidden';
   showAuthLoading('Logging out','Just a moment while we securely end your session.');
+  if(authChannel){try{await authChannel.send({type:'broadcast',event:'global-logout',payload:{}});}catch(e){}}
   const {error}=await sb.auth.signOut({scope:'global'});
   if(error){
     hideAuthLoading();
@@ -662,7 +697,7 @@ navLogout.onclick=async()=>{
     authError(error.message);
     return;
   }
-  window.applyPilotSession=null;
+  window.JobnoraSession=null;
   updateNavAuth(null);
   setTimeout(()=>{
     hideAuthLoading();
@@ -708,7 +743,7 @@ function setAuthMode(m){
   loginTab.classList.toggle('active',!signup);
   signupTab.classList.toggle('active',signup);
   authTitle.textContent=signup?'Create your account.':'Welcome back.';
-  authSub.textContent=signup?'Create an account to keep your ApplyPilot workspace private.':'Log in to your ApplyPilot account.';
+  authSub.textContent=signup?'Create an account to keep your Jobnora workspace private.':'Log in to your Jobnora account.';
   authSubmit.textContent=signup?'Create account →':'Log in →';
   authSubmit.type='submit';
   authSubmit.onclick=null;
@@ -759,11 +794,14 @@ document.getElementById('authClose').onclick=closeAuth;
 async function initAuth(){
   if(!sb){updateNavAuth(null);return;}
   const {data:{session}}=await sb.auth.getSession();
-  window.applyPilotSession=session||null;
+  window.JobnoraSession=session||null;
   updateNavAuth(session);
+  if(session) setupAuthChannel(session.user);
   sb.auth.onAuthStateChange((_event,session)=>{
-    window.applyPilotSession=session||null;
+    window.JobnoraSession=session||null;
     updateNavAuth(session);
+    if(session) setupAuthChannel(session.user);
+    else if(authChannel){try{sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
     if(session&&pendingAuthAction&&!authTransitioning){
       const action=pendingAuthAction;
       pendingAuthAction=null;
@@ -771,6 +809,9 @@ async function initAuth(){
       setTimeout(()=>action(),0);
     }
   });
+  window.addEventListener('focus',checkRemoteSession);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkRemoteSession();});
+  setInterval(checkRemoteSession,15000);
 }
 authForm.onsubmit=async e=>{
   e.preventDefault();
@@ -818,7 +859,7 @@ authForm.onsubmit=async e=>{
       return;
     }
     if(r.data.session){
-      window.applyPilotSession=r.data.session;
+      window.JobnoraSession=r.data.session;
       updateNavAuth(r.data.session);
       const action=pendingAuthAction;
       pendingAuthAction=null;
@@ -841,7 +882,7 @@ resetPassword.onclick=async()=>{if(!sb){authError('Supabase is not configured ye
 initAuth();
 </script>
 <script>
-const FORM="https://spidey2.app.n8n.cloud/webhook/applypilot-submit";
+const FORM="https://spidey2.app.n8n.cloud/webhook/Jobnora-submit";
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const J=[["Senior Product Manager","Stripe","Remote","$170k–$210k",96,["Roadmapping","Payments","SQL"],"Applied",["Remote","Best"]],["Product Manager","Airbnb","San Francisco / Hybrid","$155k–$190k",92,["Experimentation","Marketplaces","Analytics"],"Review",["Best"]],["Growth Product Manager","Notion","Remote","$145k–$180k",89,["Growth","A/B testing","PLG"],"Review",["Remote"]],["Senior PM","Ramp","New York / Hybrid","$165k–$200k",87,["Fintech","B2B SaaS","Strategy"],"Saved",[]]];
 const F=["All","Best matches","Remote","Applied","Needs review"];
@@ -852,7 +893,7 @@ $("#m5").innerHTML=[["Experience",96],["Skills",92],["Industry",88],["Seniority"
 const cols={Saved:[["Ramp","Senior PM"]],Analyzing:[["Linear","Product Lead"],["Figma","PM, Growth"]],Ready:[["Notion","Growth PM"]],Applied:[["Stripe","Senior PM"],["Vercel","Product Manager"]],Interview:[["Airbnb","Product Manager"]],Rejected:[["Acme","PM II"]]};
 $("#kan").innerHTML=Object.entries(cols).map(([k,v])=>`<div class="col"><h3>${k}<span>${v.length}</span></h3>${v.map(c=>`<div class="kc"><b style="font-weight:500">${c[1]}</b><small>${c[0]}</small></div>`).join("")}</div>`).join("");
 $("#pv").innerHTML=[["Secure resume storage","Your resume is stored privately and tied to your account only.",'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>'],["Transparent AI processing","See exactly what the AI reads, scores and changes.",'<circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/>'],["Control what gets sent","Choose which fields and documents are shared per application.",'<path d="M4 6h16M4 12h10M4 18h6"/>'],["Review before automation","Approve every tailored resume before anything is sent.",'<path d="M20 6 9 17l-5-5"/>'],["Delete your data anytime","Remove your resume and history whenever you want.",'<path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14"/>']].map(p=>`<div class="card">${ic(p[2])}<h3>${p[0]}</h3><p>${p[1]}</p></div>`).join("");
-const faq=[["How does ApplyPilot find jobs?","It searches multiple job sources using your filters: title, location, work type, salary, experience, skills, company and job type."],["Can I control which jobs it applies to?","Yes. Set a minimum fit score and filters, and approve any job before it moves forward."],["Does it change my resume?","It creates a tailored copy per role. Your original is never overwritten."],["Can I review the resume before applying?","Yes. Every tailored resume can be reviewed and edited before it is sent."],["Does it automatically apply to jobs?","Only if you turn that on. By default, applications wait for your approval."],["What job portals are supported?","Supported sources are expanding. The sources available to you are shown when you get started."],["How does the AI calculate the match score?","It compares experience, skills, industry, seniority and location from the job description against your profile and resume."],["Is my resume data private?","Your data is used only to run your job search, and you can delete it at any time."]];
+const faq=[["How does Jobnora find jobs?","It searches multiple job sources using your filters: title, location, work type, salary, experience, skills, company and job type."],["Can I control which jobs it applies to?","Yes. Set a minimum fit score and filters, and approve any job before it moves forward."],["Does it change my resume?","It creates a tailored copy per role. Your original is never overwritten."],["Can I review the resume before applying?","Yes. Every tailored resume can be reviewed and edited before it is sent."],["Does it automatically apply to jobs?","Only if you turn that on. By default, applications wait for your approval."],["What job portals are supported?","Supported sources are expanding. The sources available to you are shown when you get started."],["How does the AI calculate the match score?","It compares experience, skills, industry, seniority and location from the job description against your profile and resume."],["Is my resume data private?","Your data is used only to run your job search, and you can delete it at any time."]];
 $("#fq").innerHTML=faq.map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("");
 let flt="All";
 function list(){const ok=j=>flt=="All"||(flt=="Best matches"&&j[7].includes("Best"))||(flt=="Remote"&&j[2]=="Remote")||(flt=="Applied"&&j[6]=="Applied")||(flt=="Needs review"&&j[6]=="Review");
@@ -870,7 +911,7 @@ $("#tr").onclick=()=>$("#pn").innerHTML=resume;$("#tv").onclick=()=>jobView(i)}
 document.addEventListener("click",e=>{const mode=e.target.closest("[data-mode]");if(mode){if(mode.dataset.mode=="resume")resumeFlow();if(mode.dataset.mode=="advanced")advancedFlow();}});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-job]");if(b)jobView(+b.dataset.job,b.dataset.tab);if(e.target.closest("[data-start]"))start()});
 function start(){
-  open("Choose your ApplyPilot mode",`
+  open("Choose your Jobnora mode",`
     <div class="flow-head">
       <span class="eyebrow">Start with what you need</span>
       <h2 style="font-size:1.8rem">Choose your workflow.</h2>
@@ -889,7 +930,7 @@ function start(){
       </button>
     </div>`,false);
 }
-function submitWithAuth(action){if(window.applyPilotSession?.user?.id){action();return;}showAuth(action);}
+function submitWithAuth(action){if(window.JobnoraSession?.user?.id){action();return;}showAuth(action);}
 
 function resumeFlow(){
   open("Resume Maker",`
@@ -903,7 +944,7 @@ function resumeFlow(){
       <label>Job description <span style="color:var(--mu);font-weight:400">(optional if you provide a job link)</span><textarea name="jobDescription" placeholder="Paste the job description here if you have it..."></textarea></label>
       <label>Your resume<input type="file" name="resume" accept=".pdf,.tex" required></label>
       <button class="btn a flow-submit" type="submit">Create my ATS resume →</button>
-      <p style="font-size:.78rem;color:var(--mu)">The existing ApplyPilot processing workflow handles the final resume generation and email delivery.</p>
+      <p style="font-size:.78rem;color:var(--mu)">The existing Jobnora processing workflow handles the final resume generation and email delivery.</p>
     </form>`,false);
   $("#resumeFlowForm").onsubmit=e=>{e.preventDefault();const form=e.currentTarget;submitWithAuth(()=>resumeSubmit(form));};
   async function resumeSubmit(f){
@@ -918,7 +959,7 @@ function resumeFlow(){
     const fd=new FormData();
     fd.append("mode","resume");
     fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
+    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
     fd.append("job_url",f.elements.jobLink.value.trim());
     fd.append("job_description",f.elements.jobDescription.value.trim());
     if(f.elements.resume.files[0]) fd.append("resume_file",f.elements.resume.files[0]);
@@ -926,7 +967,7 @@ function resumeFlow(){
     try{
       const r=await fetch(FORM,{method:"POST",body:fd});
       if(!r.ok) throw new Error("Request failed");
-      showFlowSubmitted("Resume request received","Your request has been sent to ApplyPilot. The tailored ATS resume will be emailed to you when processing is complete.");
+      showFlowSubmitted("Resume request received","Your request has been sent to Jobnora. The tailored ATS resume will be emailed to you when processing is complete.");
     }catch(err){
       b.disabled=false; b.textContent="Create my ATS resume →";
       showFlowSubmitted("Something went wrong","We couldn't send your request right now. Please try again in a moment.");
@@ -937,7 +978,7 @@ function advancedFlow(){
   open("Advanced Mode",`
     <div class="flow-head"><span class="eyebrow">Advanced Mode</span>
     <h2 style="font-size:1.8rem">Find jobs and get tailored resumes.</h2>
-    <p class="lead" style="margin-top:12px">Tell ApplyPilot what you're looking for. Matching job links and ATS resumes are sent to your email.</p></div>
+    <p class="lead" style="margin-top:12px">Tell Jobnora what you're looking for. Matching job links and ATS resumes are sent to your email.</p></div>
     <div class="flow-note"><b>Flow:</b> Your details → Job discovery → Matching job links + ATS resumes → Email</div>
     <form class="flow-form" id="advancedFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
@@ -961,7 +1002,7 @@ function advancedFlow(){
     const fd=new FormData();
     fd.append("mode","advanced");
     fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
+    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
     fd.append("job_titles",f.elements.role.value.trim());
     fd.append("location",f.elements.location.value.trim());
     fd.append("work_type",f.elements.workType.value || "Any");
@@ -973,7 +1014,7 @@ function advancedFlow(){
     try{
       const r=await fetch(FORM,{method:"POST",body:fd});
       if(!r.ok) throw new Error("Request failed");
-      showFlowSubmitted("Advanced search started","Your search has been sent to ApplyPilot. Matching job links and tailored ATS resumes will be emailed to you.");
+      showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");
     }catch(err){
       b.disabled=false; b.textContent="Find my jobs →";
       showFlowSubmitted("Something went wrong","We couldn't start your search right now. Please try again in a moment.");
@@ -982,7 +1023,7 @@ function advancedFlow(){
 }
 function showFlowSubmitted(title,msg){
   open(title,`<div class="flow-success"><span class="eyebrow">Request submitted</span><h3>${title}</h3><p>${msg}</p>
-  <ul class="flow-list"><li>Check the email address you entered.</li><li>Your request continues through the ApplyPilot processing workflow.</li><li>Nothing is automatically applied on your behalf from this page.</li></ul>
+  <ul class="flow-list"><li>Check the email address you entered.</li><li>Your request continues through the Jobnora processing workflow.</li><li>Nothing is automatically applied on your behalf from this page.</li></ul>
   <button class="btn a" style="margin-top:18px" id="doneFlow">Done</button></div>`,false);
   $("#doneFlow").onclick=close;
 }
