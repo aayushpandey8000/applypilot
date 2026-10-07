@@ -588,7 +588,7 @@ canvas {
 <aside id="dr" role="dialog" aria-modal="true" aria-label="Details" aria-hidden="true"><div class="dh"><strong id="dt">Details</strong><div style="display:flex;gap:8px"><button class="btn sm" id="ext" hidden>Open externally ↗</button><button class="btn sm" id="cl" aria-label="Close">Close</button></div></div><div class="db" id="dbd"></div></aside>
 
 <style>
-#authGate{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);display:grid;place-items:center;padding:20px;overflow:auto;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}#authGate[hidden]{display:none}.auth-close{position:absolute;top:12px;right:12px}.auth-box{width:min(440px,100%);padding:28px}.auth-box h2{font-size:2rem}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:20px 0}.auth-tabs button{padding:10px;border:1px solid var(--bd);background:var(--bg);border-radius:9px}.auth-tabs button.active{background:var(--tx);color:var(--bg)}.auth-form{display:grid;gap:12px}.google-auth-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}.google-auth-btn:hover{border-color:var(--tx)}.google-icon{display:grid;place-items:center}.auth-divider{display:flex;align-items:center;gap:10px;color:var(--mu);font-size:.78rem}.auth-divider::before,.auth-divider::after{content:"";height:1px;background:var(--bd);flex:1}.auth-divider span{padding:0 4px}.auth-form label{display:grid;gap:6px;font-size:.85rem;font-weight:500}.auth-form input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit}.auth-msg{min-height:20px;font-size:.82rem;color:var(--mu)}.auth-user{display:flex;align-items:center;gap:8px}.auth-user button{padding:7px 11px}.auth-user-email{font-size:.82rem;color:var(--tx);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.auth-user button[hidden]{display:none!important}.auth-user-name{font-size:.86rem;font-weight:600;color:var(--tx);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:760px){.auth-user-email{display:none}}@media(max-width:600px){#nav .nv{gap:8px}#nav .nl{display:none}#navAuth{margin-left:auto}.auth-user button{padding:7px 9px}.nv>.btn[data-start]{display:none}}.auth-brand{display:flex;align-items:center;gap:9px;font-weight:600;margin-bottom:22px}.auth-brand .lm{width:28px;height:28px}
+#authGate{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);display:grid;place-items:center;padding:20px;overflow:auto;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}#authGate[hidden]{display:none}.auth-close{position:absolute;top:12px;right:12px}.auth-box{width:min(440px,100%);padding:28px}.auth-box h2{font-size:2rem}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:20px 0}.auth-tabs button{padding:10px;border:1px solid var(--bd);background:var(--bg);border-radius:9px}.auth-tabs button.active{background:var(--tx);color:var(--bg)}.auth-form{display:grid;gap:12px}.auth-form label{display:grid;gap:6px;font-size:.85rem;font-weight:500}.auth-form input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit}.auth-msg{min-height:20px;font-size:.82rem;color:var(--mu)}.auth-user{display:flex;align-items:center;gap:8px}.auth-user button{padding:7px 11px}.auth-user-email{font-size:.82rem;color:var(--tx);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.auth-user button[hidden]{display:none!important}.auth-user-name{font-size:.86rem;font-weight:600;color:var(--tx);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:760px){.auth-user-email{display:none}}@media(max-width:600px){#nav .nv{gap:8px}#nav .nl{display:none}#navAuth{margin-left:auto}.auth-user button{padding:7px 9px}.nv>.btn[data-start]{display:none}}.auth-brand{display:flex;align-items:center;gap:9px;font-weight:600;margin-bottom:22px}.auth-brand .lm{width:28px;height:28px}
 .auth-loading{display:none;position:absolute;inset:0;background:var(--bg);border-radius:inherit;align-items:center;justify-content:center;text-align:center;padding:28px;z-index:5}.auth-loading.show{display:flex}.auth-loading-inner{display:grid;justify-items:center;gap:14px}.auth-loader{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--tx);border-radius:50%;animation:authSpin .8s linear infinite}.auth-loading-title{font-weight:650;font-size:1rem}.auth-loading-sub{font-size:.84rem;color:var(--mu)}.auth-dots::after{content:'';display:inline-block;width:1.4em;text-align:left;animation:authDots 1.1s steps(4,end) infinite}@keyframes authSpin{to{transform:rotate(360deg)}}@keyframes authDots{0%{content:''}25%{content:'.'}50%{content:'..'}75%,100%{content:'...'}}
 
 </style>
@@ -605,13 +605,6 @@ canvas {
       <label id="authNameWrap" hidden>Full name<input id="authName" type="text" autocomplete="name" placeholder="Your name"></label><label>Email<input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com"></label>
       <label>Password<input id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="At least 6 characters"></label>
       <button class="btn a" id="authSubmit" type="submit">Log in →</button>
-      <button class="btn google-auth-btn" id="googleAuth" type="button">
-        <span class="google-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M21.35 12.27c0-.71-.06-1.39-.18-2.05H12v3.88h5.23a4.47 4.47 0 0 1-1.94 2.94v2.45h3.14c1.84-1.69 2.92-4.18 2.92-7.22Z"/><path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.14-2.45c-.87.58-1.98.92-3.31.92-2.54 0-4.69-1.72-5.46-4.03H3.3v2.53A9.74 9.74 0 0 0 12 21.5Z"/><path fill="#FBBC05" d="M6.54 13.58A5.85 5.85 0 0 1 6.23 12c0-.55.1-1.08.31-1.58V7.89H3.3A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.05 1.05 4.11l3.24-2.53Z"/><path fill="#EA4335" d="M12 6.39c1.43 0 2.71.49 3.72 1.45l2.79-2.79C16.84 3.45 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.7 5.39l3.24 2.53C7.31 8.11 9.46 6.39 12 6.39Z"/></svg>
-        </span>
-        Continue with Google
-      </button>
-      <div class="auth-divider" aria-hidden="true"><span>or</span></div>
       <button class="btn" id="resetPassword" type="button">Forgot password?</button>
       <div class="auth-msg" id="authMsg" role="status"></div>
     </form>
@@ -621,7 +614,7 @@ canvas {
 <script>
 const SUPABASE_URL='https://njvabytquqnowvtyrlxu.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_EcGzO8KtXRKeN6o6IPi9yg_YgQYpzvP';
-const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce'}}):null;
+const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 const authGate=document.getElementById('authGate'),authForm=document.getElementById('authForm'),authMsg=document.getElementById('authMsg'),authTitle=document.getElementById('authTitle'),authSub=document.getElementById('authSub'),authSubmit=document.getElementById('authSubmit'),loginTab=document.getElementById('loginTab'),signupTab=document.getElementById('signupTab'),resetPassword=document.getElementById('resetPassword');
 const navLogin=document.getElementById('navLogin'),navLogout=document.getElementById('navLogout');
 const authLoading=document.getElementById('authLoading'),authLoadingTitle=document.getElementById('authLoadingTitle'),authLoadingSub=document.getElementById('authLoadingSub');
@@ -656,9 +649,9 @@ navLogin.onclick=()=>showAuth(null);
 async function setupAuthChannel(user){
   if(!sb||!user?.id)return;
   if(authChannel){try{await sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
-  authChannel=sb.channel('jobnora-auth-'+user.id);
+  authChannel=sb.channel('Jobnora-auth-'+user.id);
   authChannel.on('broadcast',{event:'global-logout'},async()=>{
-    window.applyPilotSession=null;
+    window.JobnoraSession=null;
     updateNavAuth(null);
     try{await sb.auth.signOut({scope:'local'});}catch(e){}
     if(!authGate.hidden){
@@ -674,7 +667,7 @@ async function checkRemoteSession(){
   if(!sb)return;
   const {data:{user},error}=await sb.auth.getUser();
   if(error||!user){
-    window.applyPilotSession=null;
+    window.JobnoraSession=null;
     updateNavAuth(null);
     try{await sb.auth.signOut({scope:'local'});}catch(e){}
     if(!authGate.hidden){
@@ -704,7 +697,7 @@ navLogout.onclick=async()=>{
     authError(error.message);
     return;
   }
-  window.applyPilotSession=null;
+  window.JobnoraSession=null;
   updateNavAuth(null);
   setTimeout(()=>{
     hideAuthLoading();
@@ -798,51 +791,14 @@ function showAuth(action){
   setTimeout(()=>document.getElementById('authEmail')?.focus(),50);
 }
 document.getElementById('authClose').onclick=closeAuth;
-const googleAuth=document.getElementById('googleAuth');
-googleAuth.onclick=async()=>{
-  if(authTransitioning)return;
-  if(!sb){authError('Authentication service is unavailable. Please refresh the page and try again.');return;}
-  clearAuthMessage();
-  googleAuth.disabled=true;
-  showAuthLoading('Connecting to Google','You’ll be redirected to Google securely.');
-  try{
-    const redirectTo=window.location.origin+window.location.pathname;
-    const {data,error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo}});
-    if(error)throw error;
-    if(data?.url){window.location.assign(data.url);return;}
-    throw new Error('Google sign-in could not start. Please try again.');
-  }catch(err){
-    hideAuthLoading();
-    googleAuth.disabled=false;
-    authError(err?.message||'Google sign-in could not start. Please try again.');
-  }
-};
 async function initAuth(){
   if(!sb){updateNavAuth(null);return;}
-  try{
-    const url=new URL(window.location.href);
-    const code=url.searchParams.get('code');
-    if(code){
-      showAuthLoading('Finishing Google sign-in','Securing your Jobnora session…');
-      const {error}=await sb.auth.exchangeCodeForSession(code);
-      if(error)throw error;
-      url.searchParams.delete('code');
-      url.searchParams.delete('state');
-      url.searchParams.delete('sb_flow_id');
-      window.history.replaceState({},document.title,url.pathname+(url.search?url.search:'')+url.hash);
-      hideAuthLoading();
-    }
-  }catch(err){
-    hideAuthLoading();
-    authError(err?.message||'Google sign-in could not be completed. Please try again.');
-    try{history.replaceState({},document.title,location.pathname);}catch(e){}
-  }
   const {data:{session}}=await sb.auth.getSession();
-  window.applyPilotSession=session||null;
+  window.JobnoraSession=session||null;
   updateNavAuth(session);
   if(session) setupAuthChannel(session.user);
   sb.auth.onAuthStateChange((_event,session)=>{
-    window.applyPilotSession=session||null;
+    window.JobnoraSession=session||null;
     updateNavAuth(session);
     if(session) setupAuthChannel(session.user);
     else if(authChannel){try{sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
@@ -903,7 +859,7 @@ authForm.onsubmit=async e=>{
       return;
     }
     if(r.data.session){
-      window.applyPilotSession=r.data.session;
+      window.JobnoraSession=r.data.session;
       updateNavAuth(r.data.session);
       const action=pendingAuthAction;
       pendingAuthAction=null;
@@ -926,7 +882,7 @@ resetPassword.onclick=async()=>{if(!sb){authError('Supabase is not configured ye
 initAuth();
 </script>
 <script>
-const FORM="https://spidey2.app.n8n.cloud/webhook/jobnora-submit";
+const FORM="https://spidey2.app.n8n.cloud/webhook/Jobnora-submit";
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const J=[["Senior Product Manager","Stripe","Remote","$170k–$210k",96,["Roadmapping","Payments","SQL"],"Applied",["Remote","Best"]],["Product Manager","Airbnb","San Francisco / Hybrid","$155k–$190k",92,["Experimentation","Marketplaces","Analytics"],"Review",["Best"]],["Growth Product Manager","Notion","Remote","$145k–$180k",89,["Growth","A/B testing","PLG"],"Review",["Remote"]],["Senior PM","Ramp","New York / Hybrid","$165k–$200k",87,["Fintech","B2B SaaS","Strategy"],"Saved",[]]];
 const F=["All","Best matches","Remote","Applied","Needs review"];
@@ -974,7 +930,7 @@ function start(){
       </button>
     </div>`,false);
 }
-function submitWithAuth(action){if(window.applyPilotSession?.user?.id){action();return;}showAuth(action);}
+function submitWithAuth(action){if(window.JobnoraSession?.user?.id){action();return;}showAuth(action);}
 
 function resumeFlow(){
   open("Resume Maker",`
@@ -1003,7 +959,7 @@ function resumeFlow(){
     const fd=new FormData();
     fd.append("mode","resume");
     fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
+    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
     fd.append("job_url",f.elements.jobLink.value.trim());
     fd.append("job_description",f.elements.jobDescription.value.trim());
     if(f.elements.resume.files[0]) fd.append("resume_file",f.elements.resume.files[0]);
@@ -1046,7 +1002,7 @@ function advancedFlow(){
     const fd=new FormData();
     fd.append("mode","advanced");
     fd.append("email",f.elements.email.value.trim());
-    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
+    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
     fd.append("job_titles",f.elements.role.value.trim());
     fd.append("location",f.elements.location.value.trim());
     fd.append("work_type",f.elements.workType.value || "Any");
