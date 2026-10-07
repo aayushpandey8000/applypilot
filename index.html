@@ -614,7 +614,7 @@ canvas {
 <script>
 const SUPABASE_URL='https://njvabytquqnowvtyrlxu.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_EcGzO8KtXRKeN6o6IPi9yg_YgQYpzvP';
-const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+const sb=(window.supabase&&SUPABASE_URL.indexOf('YOUR_')!==0)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'pkce'}}):null;
 const authGate=document.getElementById('authGate'),authForm=document.getElementById('authForm'),authMsg=document.getElementById('authMsg'),authTitle=document.getElementById('authTitle'),authSub=document.getElementById('authSub'),authSubmit=document.getElementById('authSubmit'),loginTab=document.getElementById('loginTab'),signupTab=document.getElementById('signupTab'),resetPassword=document.getElementById('resetPassword');
 const navLogin=document.getElementById('navLogin'),navLogout=document.getElementById('navLogout');
 const authLoading=document.getElementById('authLoading'),authLoadingTitle=document.getElementById('authLoadingTitle'),authLoadingSub=document.getElementById('authLoadingSub');
@@ -649,9 +649,9 @@ navLogin.onclick=()=>showAuth(null);
 async function setupAuthChannel(user){
   if(!sb||!user?.id)return;
   if(authChannel){try{await sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
-  authChannel=sb.channel('Jobnora-auth-'+user.id);
+  authChannel=sb.channel('jobnora-auth-'+user.id);
   authChannel.on('broadcast',{event:'global-logout'},async()=>{
-    window.JobnoraSession=null;
+    window.applyPilotSession=null;
     updateNavAuth(null);
     try{await sb.auth.signOut({scope:'local'});}catch(e){}
     if(!authGate.hidden){
@@ -667,7 +667,7 @@ async function checkRemoteSession(){
   if(!sb)return;
   const {data:{user},error}=await sb.auth.getUser();
   if(error||!user){
-    window.JobnoraSession=null;
+    window.applyPilotSession=null;
     updateNavAuth(null);
     try{await sb.auth.signOut({scope:'local'});}catch(e){}
     if(!authGate.hidden){
@@ -697,7 +697,7 @@ navLogout.onclick=async()=>{
     authError(error.message);
     return;
   }
-  window.JobnoraSession=null;
+  window.applyPilotSession=null;
   updateNavAuth(null);
   setTimeout(()=>{
     hideAuthLoading();
@@ -794,11 +794,11 @@ document.getElementById('authClose').onclick=closeAuth;
 async function initAuth(){
   if(!sb){updateNavAuth(null);return;}
   const {data:{session}}=await sb.auth.getSession();
-  window.JobnoraSession=session||null;
+  window.applyPilotSession=session||null;
   updateNavAuth(session);
   if(session) setupAuthChannel(session.user);
   sb.auth.onAuthStateChange((_event,session)=>{
-    window.JobnoraSession=session||null;
+    window.applyPilotSession=session||null;
     updateNavAuth(session);
     if(session) setupAuthChannel(session.user);
     else if(authChannel){try{sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
@@ -859,7 +859,7 @@ authForm.onsubmit=async e=>{
       return;
     }
     if(r.data.session){
-      window.JobnoraSession=r.data.session;
+      window.applyPilotSession=r.data.session;
       updateNavAuth(r.data.session);
       const action=pendingAuthAction;
       pendingAuthAction=null;
@@ -882,7 +882,7 @@ resetPassword.onclick=async()=>{if(!sb){authError('Supabase is not configured ye
 initAuth();
 </script>
 <script>
-const FORM="https://spidey2.app.n8n.cloud/webhook/Jobnora-submit";
+const FORM="https://spidey2.app.n8n.cloud/webhook/jobnora-submit";
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const J=[["Senior Product Manager","Stripe","Remote","$170k–$210k",96,["Roadmapping","Payments","SQL"],"Applied",["Remote","Best"]],["Product Manager","Airbnb","San Francisco / Hybrid","$155k–$190k",92,["Experimentation","Marketplaces","Analytics"],"Review",["Best"]],["Growth Product Manager","Notion","Remote","$145k–$180k",89,["Growth","A/B testing","PLG"],"Review",["Remote"]],["Senior PM","Ramp","New York / Hybrid","$165k–$200k",87,["Fintech","B2B SaaS","Strategy"],"Saved",[]]];
 const F=["All","Best matches","Remote","Applied","Needs review"];
@@ -930,7 +930,7 @@ function start(){
       </button>
     </div>`,false);
 }
-function submitWithAuth(action){if(window.JobnoraSession?.user?.id){action();return;}showAuth(action);}
+function submitWithAuth(action){if(window.applyPilotSession?.user?.id){action();return;}showAuth(action);}
 
 function resumeFlow(){
   open("Resume Maker",`
@@ -959,7 +959,7 @@ function resumeFlow(){
     const fd=new FormData();
     fd.append("mode","resume");
     fd.append("email",f.elements.email.value.trim());
-    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
+    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
     fd.append("job_url",f.elements.jobLink.value.trim());
     fd.append("job_description",f.elements.jobDescription.value.trim());
     if(f.elements.resume.files[0]) fd.append("resume_file",f.elements.resume.files[0]);
@@ -1002,7 +1002,7 @@ function advancedFlow(){
     const fd=new FormData();
     fd.append("mode","advanced");
     fd.append("email",f.elements.email.value.trim());
-    if(window.JobnoraSession?.user?.id) fd.append("user_id",window.JobnoraSession.user.id);
+    if(window.applyPilotSession?.user?.id) fd.append("user_id",window.applyPilotSession.user.id);
     fd.append("job_titles",f.elements.role.value.trim());
     fd.append("location",f.elements.location.value.trim());
     fd.append("work_type",f.elements.workType.value || "Any");
