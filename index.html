@@ -641,12 +641,30 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 .hero .jm{animation:heroCardIn .9s .28s cubic-bezier(.2,.8,.2,1) both}
 /* The two large hero bubbles and the tiny bubble particles are the only continuously moving elements. */
 </style>
+
+<style id="jobnora-admin-css">
+/* Admin panel — visible/usable only for the configured admin account. */
+#jobnoraAdmin{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;overflow:auto}
+#jobnoraAdmin.open{display:block}
+.admin-wrap{max-width:1400px;margin:0 auto;padding:28px 24px 60px}
+.admin-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0 18px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.admin-brand{font-size:1.35rem;font-weight:650;letter-spacing:-.03em}.admin-brand span{color:var(--ac)}
+.admin-actions{display:flex;gap:8px;align-items:center}.admin-close{min-width:42px}
+.admin-demo-note{margin:18px 0 0;padding:10px 13px;border:1px solid var(--bd);border-radius:10px;color:var(--mu);font-size:.82rem}
+.admin-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}.admin-stat{padding:18px}.admin-stat .label{font-size:.78rem;color:var(--mu)}.admin-stat .value{font-size:2rem;font-weight:650;letter-spacing:-.04em;margin-top:5px}
+.admin-section{margin-top:28px}.admin-section h2{font-size:1.1rem;margin-bottom:12px}.admin-table-wrap{overflow:auto;border:1px solid var(--bd);border-radius:14px;background:var(--bg2)}
+.admin-table{width:100%;min-width:980px;border-collapse:collapse}.admin-table th,.admin-table td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--bd);font-size:.78rem;white-space:nowrap}.admin-table th{color:var(--mu);font-weight:500;background:color-mix(in srgb,var(--bg) 55%,var(--bg2))}.admin-table tr:last-child td{border-bottom:0}.admin-table tbody tr{cursor:pointer}.admin-table tbody tr:hover td{background:color-mix(in srgb,var(--ac) 5%,transparent)}
+.admin-search{width:100%;margin-bottom:10px}.admin-status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.admin-user-detail{display:none}.admin-user-detail.open{display:block}.admin-user-head{padding:18px}.admin-apps{display:grid;gap:10px}.admin-app{padding:15px}.admin-app-top{display:flex;justify-content:space-between;gap:12px}.admin-pill{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--acs);color:var(--ac);font-size:.7rem}.admin-muted{color:var(--mu);font-size:.78rem;margin-top:5px}.admin-error{color:#fca5a5}.admin-loading{color:var(--mu);padding:16px;text-align:center}
+@media(max-width:860px){.admin-wrap{padding:20px 16px 40px}.admin-stat-grid{grid-template-columns:repeat(2,1fr)}.admin-status-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.admin-top{align-items:flex-start}.admin-brand{font-size:1.1rem}.admin-stat .value{font-size:1.55rem}.admin-wrap{padding-inline:12px}}
+</style>
+
 </head>
 <body>
 <div id="pg"></div><nav id="nav"><div class="w nv">
 <a href="#top" class="lg" aria-label="Jobnora home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Jobnora</a>
 <div class="nl"><a href="#modes">How it works</a><a href="#resume">Tailoring</a><a href="#jobs">Matches</a><a href="#privacy">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
-<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navDashboard" type="button" hidden>Dashboard</button><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme"><span class="theme-icon" id="themeIcon">☀</span><span class="theme-label" id="themeLabel">Light</span></button><button class="btn p sm" data-start>Choose your mode</button></div></nav>
+<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navDashboard" type="button" hidden>Dashboard</button><button class="btn a sm" id="navAdmin" type="button" hidden>Admin</button><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme"><span class="theme-icon" id="themeIcon">☀</span><span class="theme-label" id="themeLabel">Light</span></button><button class="btn p sm" data-start>Choose your mode</button></div></nav>
 
 <header class="hero" id="top"><div class="grid-bg"></div><div class="w">
 <span class="pill"><i class="dot"></i>Your agent is searching 12 sources right now</span>
@@ -742,6 +760,47 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 
   </div>
 </div>
+
+<div id="jobnoraAdmin" aria-hidden="true">
+  <div class="admin-wrap">
+    <div class="admin-top">
+      <div class="admin-brand">Jobnora <span>Admin</span></div>
+      <div class="admin-actions">
+        <button class="btn sm" id="adminRefresh" type="button">Refresh</button>
+        <button class="btn sm admin-close" id="adminClose" type="button" aria-label="Close admin panel">×</button>
+      </div>
+    </div>
+    <div id="adminDashboardView">
+      <div class="admin-demo-note">Admin access: <b>aayushpandey8000@gmail.com</b>. This panel is separate from billing and payment functionality.</div>
+      <div class="admin-stat-grid">
+        <div class="card admin-stat"><div class="label">Total users</div><div class="value" id="adminTotalUsers">—</div></div>
+        <div class="card admin-stat"><div class="label">New users · 7 days</div><div class="value" id="adminNewUsers">—</div></div>
+        <div class="card admin-stat"><div class="label">Active · 7 days</div><div class="value" id="adminActiveUsers">—</div></div>
+        <div class="card admin-stat"><div class="label">Applications</div><div class="value" id="adminApplications">—</div></div>
+        <div class="card admin-stat"><div class="label">Emails sent</div><div class="value" id="adminEmails">—</div></div>
+        <div class="card admin-stat"><div class="label">Resumes generated</div><div class="value" id="adminResumes">—</div></div>
+        <div class="card admin-stat"><div class="label">Interviews</div><div class="value" id="adminInterview">—</div></div>
+        <div class="card admin-stat"><div class="label">Selected</div><div class="value" id="adminSelected">—</div></div>
+      </div>
+      <div class="admin-section"><h2>Application status</h2><div class="admin-status-grid">
+        <div class="card admin-stat"><div class="label">Applied</div><div class="value" id="adminApplied">—</div></div>
+        <div class="card admin-stat"><div class="label">Interview</div><div class="value" id="adminInterview2">—</div></div>
+        <div class="card admin-stat"><div class="label">Selected</div><div class="value" id="adminSelected2">—</div></div>
+        <div class="card admin-stat"><div class="label">Rejected</div><div class="value" id="adminRejected">—</div></div>
+      </div></div>
+      <div class="admin-section"><h2>Users</h2><input class="admin-search" id="adminSearch" type="search" placeholder="Search users by email…"><div class="admin-table-wrap">
+        <table class="admin-table"><thead><tr><th>Email</th><th>Joined</th><th>Last active</th><th>Applications</th><th>Emails</th><th>Resumes</th><th>Applied</th><th>Interview</th><th>Selected</th><th>Rejected</th></tr></thead><tbody id="adminUsersBody"></tbody></table>
+      </div></div>
+      <div id="adminMessage" class="admin-muted" style="margin-top:10px"></div>
+    </div>
+    <div id="adminUserDetail" class="admin-user-detail">
+      <button class="btn sm" id="adminBackUsers" type="button">← Back to users</button>
+      <div class="card admin-user-head" style="margin-top:12px"><div id="adminDetailEmail" style="font-size:1.2rem;font-weight:600"></div><div id="adminDetailMeta" class="admin-muted"></div></div>
+      <div class="admin-section"><h2>Applications</h2><div id="adminApps" class="admin-apps"></div></div>
+    </div>
+  </div>
+</div>
+
 <div id="authGate" hidden>
   <div class="auth-box card" style="position:relative">
     <button type="button" class="btn sm auth-close" id="authClose" aria-label="Close">×</button>
@@ -773,6 +832,12 @@ let authChannel=null;
 
 let authMode='login';
 const navUserName=document.getElementById('navUserName'),navDashboard=document.getElementById('navDashboard'),authNameWrap=document.getElementById('authNameWrap'),authName=document.getElementById('authName');
+const ADMIN_EMAIL='aayushpandey8000@gmail.com';
+const navAdmin=document.getElementById('navAdmin');
+const jobnoraAdmin=document.getElementById('jobnoraAdmin');
+const adminDashboardView=document.getElementById('adminDashboardView');
+const adminUserDetail=document.getElementById('adminUserDetail');
+let adminUsers=[];
 function getUserDisplayName(user){
   const meta=user?.user_metadata||{};
   const name=(meta.full_name||meta.name||'').trim();
@@ -786,6 +851,8 @@ function updateNavAuth(session){
   navLogout.hidden=!loggedIn;
   navUserName.hidden=!loggedIn;
   if(navDashboard)navDashboard.hidden=!loggedIn;
+  const isAdmin=loggedIn && String(session.user?.email||'').toLowerCase()===ADMIN_EMAIL;
+  if(navAdmin)navAdmin.hidden=!isAdmin;
   if(loggedIn){
     const name=getUserDisplayName(session.user);
     navUserName.textContent='Hi, '+name;
@@ -796,6 +863,54 @@ function updateNavAuth(session){
     navLogout.title='Log out';
   }
 }
+
+function adminAuthorized(){
+  const email=String(window.applyPilotSession?.user?.email||'').toLowerCase();
+  return email===ADMIN_EMAIL;
+}
+function adminDate(v){return v?new Date(v).toLocaleString():'—';}
+function adminEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function adminSetMessage(t,error=false){const el=document.getElementById('adminMessage');if(el){el.textContent=t||'';el.className='admin-muted'+(error?' admin-error':'');}}
+function openAdmin(){
+  if(!adminAuthorized()){return;}
+  jobnoraAdmin.classList.add('open');jobnoraAdmin.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  adminDashboardView.style.display='block';adminUserDetail.classList.remove('open');loadAdminDashboard();
+}
+function closeAdmin(){jobnoraAdmin.classList.remove('open');jobnoraAdmin.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+navAdmin?.addEventListener('click',openAdmin);
+document.getElementById('adminClose')?.addEventListener('click',closeAdmin);
+document.getElementById('adminRefresh')?.addEventListener('click',loadAdminDashboard);
+document.getElementById('adminBackUsers')?.addEventListener('click',()=>{adminUserDetail.classList.remove('open');adminDashboardView.style.display='block';});
+async function loadAdminDashboard(){
+  if(!adminAuthorized()){closeAdmin();return;}
+  adminSetMessage('Loading admin data…');
+  const [statsRes,usersRes]=await Promise.all([sb.rpc('jobnora_admin_stats'),sb.rpc('jobnora_admin_users')]);
+  if(statsRes.error||usersRes.error){adminSetMessage((statsRes.error||usersRes.error)?.message||'Could not load admin data.',true);return;}
+  const x=statsRes.data||{};
+  const map={adminTotalUsers:'total_users',adminNewUsers:'new_users_7d',adminActiveUsers:'active_users_7d',adminApplications:'total_applications',adminEmails:'total_emails_sent',adminResumes:'total_resumes_generated',adminInterview:'interview',adminSelected:'selected',adminApplied:'applied',adminInterview2:'interview',adminSelected2:'selected',adminRejected:'rejected'};
+  Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=x[key]??0;});
+  adminUsers=usersRes.data||[];renderAdminUsers(adminUsers);adminSetMessage('');
+}
+function renderAdminUsers(list){
+  const body=document.getElementById('adminUsersBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="10" style="color:var(--mu)">No users found.</td></tr>';return;}
+  body.innerHTML=list.map(u=>`<tr data-admin-user="${adminEsc(u.user_id)}"><td>${adminEsc(u.email||'—')}</td><td>${adminDate(u.created_at)}</td><td>${adminDate(u.last_sign_in_at)}</td><td>${u.applications||0}</td><td>${u.emails_sent||0}</td><td>${u.resumes_generated||0}</td><td>${u.applied||0}</td><td>${u.interview||0}</td><td>${u.selected||0}</td><td>${u.rejected||0}</td></tr>`).join('');
+  body.querySelectorAll('[data-admin-user]').forEach(row=>row.addEventListener('click',()=>openAdminUser(row.dataset.adminUser)));
+}
+document.getElementById('adminSearch')?.addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();renderAdminUsers(adminUsers.filter(u=>String(u.email||'').toLowerCase().includes(q)));});
+async function openAdminUser(id){
+  if(!adminAuthorized())return;
+  const u=adminUsers.find(x=>x.user_id===id);if(!u)return;
+  adminDashboardView.style.display='none';adminUserDetail.classList.add('open');
+  document.getElementById('adminDetailEmail').textContent=u.email||'User';
+  document.getElementById('adminDetailMeta').textContent=`Joined ${adminDate(u.created_at)} · Last active ${adminDate(u.last_sign_in_at)} · ${u.applications||0} applications · ${u.emails_sent||0} emails`;
+  const box=document.getElementById('adminApps');box.innerHTML='<div class="admin-loading">Loading applications…</div>';
+  const r=await sb.rpc('jobnora_admin_user_applications',{target_user_id:id});
+  if(r.error){box.innerHTML=`<div class="admin-muted admin-error">${adminEsc(r.error.message)}</div>`;return;}
+  if(!r.data?.length){box.innerHTML='<div class="admin-muted">No applications recorded.</div>';return;}
+  box.innerHTML=r.data.map(a=>`<div class="card admin-app"><div class="admin-app-top"><div><b>${adminEsc(a.job_title||'Untitled job')}</b><div class="admin-muted">${adminEsc(a.company_name||'Unknown company')} · ${adminEsc(a.mode||'')}</div></div><span class="admin-pill">${adminEsc(a.status||'applied')}</span></div><div class="admin-muted">Created ${adminDate(a.created_at)} · Email sent ${adminDate(a.email_sent_at)}</div>${a.job_url?`<div style="margin-top:8px"><a href="${adminEsc(a.job_url)}" target="_blank" rel="noopener" style="color:var(--ac)">Open job ↗</a></div>`:''}</div>`).join('');
+}
+
 navLogin.onclick=()=>showAuth(null);
 async function setupAuthChannel(user){
   if(!sb||!user?.id)return;
@@ -940,10 +1055,12 @@ async function initAuth(){
   const {data:{session}}=await sb.auth.getSession();
   window.applyPilotSession=session||null;
   updateNavAuth(session);
+  if(!adminAuthorized())closeAdmin();
   if(session){setupAuthChannel(session.user);loadSavedResume();}
   sb.auth.onAuthStateChange((_event,session)=>{
     window.applyPilotSession=session||null;
     updateNavAuth(session);
+    if(!adminAuthorized())closeAdmin();
     if(session){setupAuthChannel(session.user);loadSavedResume();}
     else if(authChannel){try{sb.removeChannel(authChannel);}catch(e){} authChannel=null;}
     // The explicit login handler owns the post-login transition.
