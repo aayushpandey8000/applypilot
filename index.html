@@ -1,39 +1,3 @@
-Pasted text(1).txt
-Document
-this i sthe latest one 
-
-You're right — if you opened it and visually can't tell any difference, then the changes were too subtle. The previous version mostly added micro-interactions, not the kind of obvious premium animation you're expecting.
-
-I can fix that by making the front page visibly animated: hero text reveal, floating/glowing background, animated job card, scroll-triggered section reveals, moving gradient borders, animated stats, flowing “How it works” line, and stronger hover effects.
-
-I’ll work from your latest HTML and keep all existing auth, resume, n8n, responsive, and functionality unchanged.
-
-yes
-
-Done — this version has much more visible animation, not just tiny hover effects.
-
-What changed
-Hero section visibly animates in on page load
-Large moving ambient glow/orbs
-Hero job card continuously floats
-Heading has a moving gradient effect
-CTA has a visible shine sweep
-18 subtle floating particles in the hero
-Every major section now reveals as you scroll
-Cards enter with a staggered animation
-“How it works” gets a traveling animated line
-Stats/numbers pop in
-Job/resume/tracker cards have stronger lift + glow
-Background grid has subtle movement
-Mobile animations are adjusted
-prefers-reduced-motion is respected
-No changes to Supabase, auth, saved resume, n8n, forms, or backend
-New file
-
-Download Jobnora Animated V2
-
-Important: replace your currently deployed HTML with this V2 file and do a hard refresh (Ctrl + Shift + R). Otherwise the browser may keep showing the old cached version.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1275,34 +1239,3 @@ const hj=$(".jm");if(hj&&matchMedia("(hover:hover)").matches){const h=$(".hero")
 
 </body>
 </html>
-jobnora-animated-v2.html
-HTML
-no floats ok 
-
-Got it — no floating elements.
-
-I'll keep the animations clean and grounded: scroll reveals, text transitions, button effects, card hover/shine, animated gradients, and section transitions, but nothing that looks like it's floating around the page.
-
-yes
-
-Done. I changed it to a grounded animation style — no floating elements.
-
-This version has
-Smooth section-by-section scroll reveals
-Stronger card entrance animations
-Heading animated gradient
-CTA shine effect
-Card hover lift — only when you interact
-Staggered animations for job/resume/tracker sections
-Smooth transitions throughout
-No floating particles
-No continuously floating cards
-Mobile-safe
-Existing auth, resume upload, saved resume, forms and n8n behavior preserved
-
-Download Jobnora — No Float Animated Version
-
-After replacing the file, use Ctrl + Shift + R once to bypass the old browser cache.
-
-jobnora-animated-no-float.html
-HTML
