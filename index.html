@@ -721,8 +721,8 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 #dashboardGate{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:18px;overflow:auto;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
 #dashboardGate[hidden]{display:none}
 .dashboard-box{width:min(920px,100%);max-height:min(86vh,820px);overflow:auto;padding:26px}
-.dashboard-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.dashboard-head h2{margin:5px 0 6px}.dashboard-head p{margin:0;color:var(--mu);font-size:.9rem}.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.dash-stat{padding:18px}.dash-stat span{display:block;color:var(--mu);font-size:.8rem}.dash-stat strong{display:block;font-size:2rem;margin-top:4px}.dashboard-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 12px}.dashboard-list-head h3{margin:0}.dashboard-list-head span{font-size:.76rem;color:var(--mu)}.dashboard-list{display:grid;gap:8px}.dash-row{display:grid;grid-template-columns:1.3fr 1fr auto;gap:16px;align-items:center;padding:15px 16px;border:1px solid var(--bd);border-radius:13px;background:var(--bg)}.dash-main b,.dash-main small{display:block}.dash-main small,.dash-meta small{color:var(--mu);font-size:.78rem;margin-top:3px}.dash-status{font-size:.76rem;font-weight:650;padding:6px 9px;border-radius:999px;background:var(--acs);color:var(--ac);white-space:nowrap}.dash-empty{padding:28px;border:1px dashed var(--bd);border-radius:13px;color:var(--mu);text-align:center}.dash-error{color:var(--err,#c0392b);background:color-mix(in srgb,#c0392b 7%,transparent);border:1px solid color-mix(in srgb,#c0392b 22%,var(--bd));padding:14px;border-radius:12px;font-size:.85rem}
-@media(max-width:700px){.dashboard-box{padding:18px}.dashboard-stats{grid-template-columns:1fr}.dash-row{grid-template-columns:1fr;gap:9px}.dash-status{justify-self:start}}
+.dashboard-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.dashboard-head h2{margin:5px 0 6px}.dashboard-head p{margin:0;color:var(--mu);font-size:.9rem}.dashboard-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:24px 0}.dash-stat{padding:18px}.dash-stat span{display:block;color:var(--mu);font-size:.8rem}.dash-stat strong{display:block;font-size:2rem;margin-top:4px}.dashboard-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 12px}.dashboard-list-head h3{margin:0}.dashboard-list-head span{font-size:.76rem;color:var(--mu)}.dashboard-list{display:grid;gap:8px}.dash-row{display:grid;grid-template-columns:1.3fr 1fr auto;gap:16px;align-items:center;padding:15px 16px;border:1px solid var(--bd);border-radius:13px;background:var(--bg)}.dash-main b,.dash-main small{display:block}.dash-main small,.dash-meta small{color:var(--mu);font-size:.78rem;margin-top:3px}.dash-status{font-size:.76rem;font-weight:650;padding:6px 9px;border-radius:999px;background:var(--acs);color:var(--ac);white-space:nowrap}.dash-status select{border:0;background:transparent;color:inherit;font:inherit;font-weight:650;outline:none;cursor:pointer}.dash-status select option{color:#111;background:#fff}.dash-actions{display:flex;align-items:center;gap:8px}.dash-save{font-size:.72rem;color:var(--ok);min-width:38px}.dash-row.is-saving{opacity:.7}.dash-empty{padding:28px;border:1px dashed var(--bd);border-radius:13px;color:var(--mu);text-align:center}.dash-error{color:var(--err,#c0392b);background:color-mix(in srgb,#c0392b 7%,transparent);border:1px solid color-mix(in srgb,#c0392b 22%,var(--bd));padding:14px;border-radius:12px;font-size:.85rem}
+@media(max-width:700px){.dashboard-box{padding:18px}.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dash-row{grid-template-columns:1fr;gap:9px}.dash-status{justify-self:start}}
 #authGate{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);display:grid;place-items:center;padding:20px;overflow:auto;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}#authGate[hidden]{display:none}.auth-close{position:absolute;top:12px;right:12px}.auth-box{width:min(440px,100%);padding:28px}.auth-box h2{font-size:2rem}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:20px 0}.auth-tabs button{padding:10px;border:1px solid var(--bd);background:var(--bg);border-radius:9px}.auth-tabs button.active{background:var(--tx);color:var(--bg)}.auth-form{display:grid;gap:12px}.auth-form label{display:grid;gap:6px;font-size:.85rem;font-weight:500}.auth-form input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit}.auth-msg{min-height:20px;font-size:.82rem;color:var(--mu)}.auth-user{display:flex;align-items:center;gap:8px}.auth-user button{padding:7px 11px}.auth-user-email{font-size:.82rem;color:var(--tx);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.auth-user button[hidden]{display:none!important}.auth-user-name{font-size:.86rem;font-weight:600;color:var(--tx);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:760px){.auth-user-email{display:none}}@media(max-width:600px){#nav .nv{gap:8px}#nav .nl{display:none}#navAuth{margin-left:auto}.auth-user button{padding:7px 9px}.nv>.btn[data-start]{display:none}}.auth-brand{display:flex;align-items:center;gap:9px;font-weight:600;margin-bottom:22px}.auth-brand .lm{width:28px;height:28px}
 .auth-loading{display:none;position:absolute;inset:0;background:var(--bg);border-radius:inherit;align-items:center;justify-content:center;text-align:center;padding:28px;z-index:5}.auth-loading.show{display:flex}.auth-loading-inner{display:grid;justify-items:center;gap:14px}.auth-loader{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--tx);border-radius:50%;animation:authSpin .8s linear infinite}.auth-loading-title{font-weight:650;font-size:1rem}.auth-loading-sub{font-size:.84rem;color:var(--mu)}.auth-dots::after{content:'';display:inline-block;width:1.4em;text-align:left;animation:authDots 1.1s steps(4,end) infinite}@keyframes authSpin{to{transform:rotate(360deg)}}@keyframes authDots{0%{content:''}25%{content:'.'}50%{content:'..'}75%,100%{content:'...'}}
 
@@ -732,11 +732,14 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
     <div class="dashboard-head"><div><span class="eyebrow">Your Jobnora activity</span><h2 id="dashboardTitle">Application dashboard</h2><p>Everything Jobnora has successfully emailed for your account.</p></div><button type="button" class="btn sm" id="dashboardClose" aria-label="Close">×</button></div>
     <div class="dashboard-stats">
       <div class="card dash-stat"><span>Emails sent</span><strong id="dashEmails">0</strong></div>
-      <div class="card dash-stat"><span>Jobs processed</span><strong id="dashJobs">0</strong></div>
-      <div class="card dash-stat"><span>Companies</span><strong id="dashCompanies">0</strong></div>
+      <div class="card dash-stat"><span>Applied</span><strong id="dashApplied">0</strong></div>
+      <div class="card dash-stat"><span>Interview</span><strong id="dashInterview">0</strong></div>
+      <div class="card dash-stat"><span>Selected</span><strong id="dashSelected">0</strong></div>
+      <div class="card dash-stat"><span>Rejected</span><strong id="dashRejected">0</strong></div>
     </div>
     <div class="dashboard-list-head"><h3>Application history</h3><span id="dashUpdated">Loading…</span></div>
     <div id="dashList" class="dashboard-list"><div class="dash-empty">Loading your history…</div></div>
+
   </div>
 </div>
 <div id="authGate" hidden>
@@ -1080,14 +1083,55 @@ async function openDashboard(){
   if(!user?.id){showAuth(openDashboard);return;}
   dashboardGate.hidden=false;dashboardGate.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
   dashList.innerHTML='<div class="dash-empty">Loading your history…</div>';
-  const {data,error}=await sb.from('jobnora_applications').select('company_name,job_title,job_url,status,email_sent,email_sent_at,created_at,mode').eq('user_id',user.id).order('created_at',{ascending:false}).limit(100);
-  if(error){dashList.innerHTML='<div class="dash-error">Your activity table is not ready yet. Run the Jobnora activity SQL setup once in Supabase, then refresh this dashboard.</div>';return;}
+  const {data,error}=await sb.from('jobnora_applications').select('id,company_name,job_title,job_url,status,status_updated_at,email_sent,email_sent_at,created_at,mode').eq('user_id',user.id).order('created_at',{ascending:false}).limit(100);
+  if(error){dashList.innerHTML='<div class="dash-error">Could not load your application history. Please refresh and try again.</div>';return;}
   const rows=data||[];
-  const emails=rows.filter(r=>r.email_sent).length;
-  const companies=new Set(rows.map(r=>String(r.company_name||'').trim()).filter(Boolean));
-  document.getElementById('dashEmails').textContent=emails;document.getElementById('dashJobs').textContent=rows.length;document.getElementById('dashCompanies').textContent=companies.size;
-  document.getElementById('dashUpdated').textContent=rows.length?'Updated just now':'No activity yet';
-  dashList.innerHTML=rows.length?rows.map(r=>{const when=new Date(r.email_sent_at||r.created_at);const date=Number.isNaN(when.getTime())?'':when.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});const company=r.company_name||'Company not listed';const title=r.job_title||'Job application';return `<div class="dash-row"><div class="dash-main"><b>${escapeHtml(company)}</b><small>${escapeHtml(title)}</small></div><div class="dash-meta"><small>${escapeHtml(date)}</small>${r.recipient_email?`<small>${escapeHtml(r.recipient_email)}</small>`:''}</div><span class="dash-status">${r.email_sent?'Resume emailed':'Processing'}</span></div>`}).join(''):'<div class="dash-empty">No emails have been recorded yet. Your first successful Jobnora email will appear here.</div>';
+  const normalizedStatus=r=>({sent:'applied',processing:'applied',failed:'rejected'}[String(r.status||'').toLowerCase()]||String(r.status||'applied').toLowerCase());
+  const counts={applied:0,interview:0,selected:0,rejected:0};
+  rows.forEach(r=>{const st=normalizedStatus(r);if(counts[st]!==undefined)counts[st]++;});
+  document.getElementById('dashEmails').textContent=rows.filter(r=>r.email_sent).length;
+  document.getElementById('dashApplied').textContent=counts.applied;
+  document.getElementById('dashInterview').textContent=counts.interview;
+  document.getElementById('dashSelected').textContent=counts.selected;
+  document.getElementById('dashRejected').textContent=counts.rejected;
+  document.getElementById('dashUpdated').textContent=rows.length?`${rows.length} application${rows.length===1?'':'s'}`:'No activity yet';
+  dashList.innerHTML=rows.length?rows.map(r=>{
+    const when=new Date(r.email_sent_at||r.created_at);
+    const date=Number.isNaN(when.getTime())?'':when.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
+    const company=r.company_name||'Company not listed';
+    const title=r.job_title||'Job application';
+    const st=normalizedStatus(r);
+    return `<div class="dash-row" data-app-id="${escapeHtml(r.id)}">
+      <div class="dash-main"><b>${escapeHtml(company)}</b><small>${escapeHtml(title)}</small></div>
+      <div class="dash-meta"><small>${escapeHtml(date)}</small></div>
+      <div class="dash-actions">
+        <span class="dash-status"><select class="dash-status-select" aria-label="Update status for ${escapeHtml(company)}" data-status-id="${escapeHtml(r.id)}">
+          ${['applied','interview','selected','rejected'].map(x=>`<option value="${x}" ${x===st?'selected':''}>${x[0].toUpperCase()+x.slice(1)}</option>`).join('')}
+        </select></span><span class="dash-save" data-save-for="${escapeHtml(r.id)}" aria-live="polite"></span>
+      </div>
+    </div>`;
+  }).join(''):'<div class="dash-empty">No applications yet. Your first successful Jobnora email will appear here.</div>';
+  dashList.querySelectorAll('.dash-status-select').forEach(sel=>sel.addEventListener('change',()=>updateApplicationStatus(sel,user.id)));
+}
+async function updateApplicationStatus(select,userId){
+  const id=select.dataset.statusId;
+  const row=select.closest('.dash-row');
+  const save=row?.querySelector(`[data-save-for="${CSS.escape(id)}"]`);
+  const next=select.value;
+  if(!id||!['applied','interview','selected','rejected'].includes(next))return;
+  row?.classList.add('is-saving'); if(save)save.textContent='Saving…'; select.disabled=true;
+  const {error}=await sb.from('jobnora_applications').update({status:next,status_updated_at:new Date().toISOString()}).eq('id',id).eq('user_id',userId);
+  select.disabled=false; row?.classList.remove('is-saving');
+  if(error){if(save)save.textContent='Failed';return;}
+  if(save){save.textContent='Saved';setTimeout(()=>{if(save)save.textContent=''},1200);}
+  refreshDashboardCounts();
+}
+async function refreshDashboardCounts(){
+  const user=await getLoggedInUser(); if(!user?.id)return;
+  const {data}=await sb.from('jobnora_applications').select('status').eq('user_id',user.id).limit(1000);
+  const counts={applied:0,interview:0,selected:0,rejected:0};
+  (data||[]).forEach(r=>{const st=({sent:'applied',processing:'applied',failed:'rejected'}[String(r.status||'').toLowerCase()]||String(r.status||'applied').toLowerCase());if(counts[st]!==undefined)counts[st]++;});
+  document.getElementById('dashEmails').textContent=(data||[]).length;document.getElementById('dashApplied').textContent=counts.applied;document.getElementById('dashInterview').textContent=counts.interview;document.getElementById('dashSelected').textContent=counts.selected;document.getElementById('dashRejected').textContent=counts.rejected;
 }
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 if(navDashboard)navDashboard.addEventListener('click',openDashboard);
