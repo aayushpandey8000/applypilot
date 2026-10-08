@@ -1356,26 +1356,35 @@ function resumeFlow(){
 function advancedFlow(){
   open("Advanced Mode",`
     <div class="flow-head"><span class="eyebrow">Advanced Mode</span>
-    <h2 style="font-size:1.8rem">Find jobs and get tailored resumes.</h2>
-    <p class="lead" style="margin-top:12px">Your account email and saved resume are filled automatically.</p></div>
-    <div class="flow-note"><b>Flow:</b> Your details → Job discovery → Matching job links + ATS resumes → Email</div>
+    <h2 style="font-size:1.8rem">Find jobs that actually fit.</h2>
+    <p class="lead" style="margin-top:12px">Tell Jobnora your role, experience, work style and education. We use those signals together before a job can consume a credit.</p></div>
+    <div class="flow-note"><b>Freshers:</b> choose “Fresher / 0 years” and enter your degree or field (for example BBA, B.Tech CSE, BSc Computer Science).</div>
     <form class="flow-form" id="advancedFlowForm">
       <label>Email address<input type="email" name="email" autocomplete="email" placeholder="you@example.com" required></label>
-      <label>Target job title<input type="text" name="role" placeholder="e.g. Product Manager" required></label>
+      <label>Target job title<input type="text" name="role" placeholder="e.g. Business Analyst, Software Engineer" required></label>
       <div class="flow-note" style="margin-top:0"><b>Job source:</b> LinkedIn</div>
       <div class="two">
         <label>Preferred location<input type="text" name="location" placeholder="Remote / Delhi / Bengaluru"></label>
-        <label>Work type<select name="workType"><option value="">Any</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
+        <label>Work type<select name="workType"><option value="Any">Any</option><option>Remote</option><option>Hybrid</option><option>On-site</option></select></label>
       </div>
       <div class="two">
-        <label>Experience<input type="text" name="experience" placeholder="e.g. 2–5 years"></label>
+        <label>Experience
+          <select name="experience" required>
+            <option value="Fresher / 0 years">Fresher / 0 years</option>
+            <option value="1-3 years">1–3 years</option>
+            <option value="3-5 years">3–5 years</option>
+            <option value="5-8 years">5–8 years</option>
+            <option value="8+ years">8+ years</option>
+          </select>
+        </label>
         <label>Maximum jobs<input type="number" name="maxJobs" min="1" max="50" step="1" value="5" placeholder="e.g. 5" required></label>
       </div>
+      <label>Degree / field <span style="color:var(--mu);font-weight:400">(especially useful for freshers)</span><input type="text" name="educationField" placeholder="e.g. BBA, B.Tech CSE, BSc Computer Science, MBA Finance"></label>
       <label>Search window (hours)<input type="number" name="searchWindow" min="1" max="720" step="1" value="24" placeholder="e.g. 24" required></label>
       <label>Your resume<input type="file" name="resume" accept=".pdf,.tex"></label>
       <p data-resume-status style="font-size:.8rem;margin-top:-8px">Checking your saved resume…</p>
       <button class="btn a flow-submit" type="submit">Find my jobs →</button>
-      <p style="font-size:.78rem;color:var(--mu)">Matching job links and tailored ATS resumes will be delivered to your email.</p>
+      <p style="font-size:.78rem;color:var(--mu)">A job only uses a credit after it passes the fit checks.</p>
     </form>`,false);
   const form=$("#advancedFlowForm");hydrateResumeField(form);
   form.onsubmit=e=>{e.preventDefault();submitWithAuth(()=>advancedSubmit(form));};
@@ -1385,9 +1394,9 @@ function advancedFlow(){
     const resumeFile=selected||window.jobnoraSavedResume;if(!resumeFile){f.elements.resume.required=true;f.elements.resume.focus();f.reportValidity();return;}
     const fd=new FormData();fd.append("mode","advanced");fd.append("email",f.elements.email.value.trim());
     if(window.applyPilotSession?.user?.id)fd.append("user_id",window.applyPilotSession.user.id);
-    fd.append("job_sources",JSON.stringify(["linkedin"]));fd.append("job_titles",f.elements.role.value.trim());fd.append("location",f.elements.location.value.trim());fd.append("work_type",f.elements.workType.value||"Any");fd.append("experience",f.elements.experience.value.trim());fd.append("max_jobs",f.elements.maxJobs.value);fd.append("search_window",f.elements.searchWindow.value);fd.append("resume_file",resumeFile,resumeFile.name);
+    fd.append("job_sources",JSON.stringify(["linkedin"]));fd.append("job_titles",f.elements.role.value.trim());fd.append("location",f.elements.location.value.trim());fd.append("work_type",f.elements.workType.value||"Any");fd.append("experience",f.elements.experience.value.trim());fd.append("education_field",f.elements.educationField.value.trim());fd.append("max_jobs",f.elements.maxJobs.value);fd.append("search_window",f.elements.searchWindow.value);fd.append("resume_file",resumeFile,resumeFile.name);
     b.disabled=true;b.textContent="Starting search…";
-    try{const r=await fetch(FORM,{method:"POST",headers:(window.applyPilotSession?.access_token?{Authorization:`Bearer ${window.applyPilotSession.access_token}`}:(sb?.auth?await sb.auth.getSession().then(x=>x.data.session?.access_token?{Authorization:`Bearer ${x.data.session.access_token}`}:{}) : {})),body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");}
+    try{const r=await fetch(FORM,{method:"POST",headers:(window.applyPilotSession?.access_token?{Authorization:`Bearer ${window.applyPilotSession.access_token}`}:(sb?.auth?await sb.auth.getSession().then(x=>x.data.session?.access_token?{Authorization:`Bearer ${x.data.session.access_token}`}:{}):{})),body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");}
     catch(err){b.disabled=false;b.textContent="Find my jobs →";showFlowSubmitted("Something went wrong","We couldn't start your search right now. Please try again in a moment.");}
   }
 }
