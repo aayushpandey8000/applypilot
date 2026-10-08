@@ -528,8 +528,8 @@ canvas {
 @keyframes heroTitleIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
 @keyframes heroTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes heroCardIn{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
-.hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--ac) 7%,transparent),transparent 34%);animation:heroBreath 7s ease-in-out infinite}
-@keyframes heroBreath{50%{opacity:.55;transform:scale(1.04)}}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--ac) 7%,transparent),transparent 34%)}
+
 .mode-card{transform-style:preserve-3d;will-change:transform}
 .mode-card .mode-icon{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
 .mode-card:hover .mode-icon{transform:translateY(-2px) rotate(-4deg) scale(1.06);box-shadow:0 0 0 7px var(--acs)}
@@ -565,8 +565,8 @@ body{overflow-x:hidden}
 .hero:after{width:620px;height:620px;right:-220px;bottom:-260px;background:radial-gradient(circle,color-mix(in srgb,#7c5cff 16%,transparent) 0%,transparent 68%);animation:orbB 10s ease-in-out infinite alternate}
 @keyframes orbA{to{transform:translate(100px,50px) scale(1.25)}}
 @keyframes orbB{to{transform:translate(-90px,-60px) scale(1.18)}}
-.hero .jm{animation:heroFloat 4.5s ease-in-out infinite,heroCardIn 1s .25s var(--motion-ease) both;will-change:transform}
-@keyframes heroFloat{0%,100%{margin-top:0}50%{margin-top:-13px}}
+.hero .jm{animation:heroCardIn 1s .25s var(--motion-ease) both}
+50%{margin-top:-13px}}
 .hero h1{background-size:200% auto;animation:titleReveal .9s .1s var(--motion-ease) both,gradientSweep 6s linear infinite}
 @keyframes titleReveal{from{opacity:0;transform:translateY(35px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
 @keyframes gradientSweep{to{background-position:200% center}}
@@ -599,12 +599,6 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 .motion-in .mode-card:before,.motion-in .job:before,.motion-in .doc:before,.motion-in .kan .col:before{animation:sweepCard 1.3s .35s ease-out both}
 @keyframes sweepCard{to{transform:translateX(120%)}}
 
-/* Make the How It Works progression visibly travel */
-.flow{position:relative}
-.flow:after{content:"";position:absolute;left:3%;right:3%;top:20px;height:2px;background:linear-gradient(90deg,transparent,var(--ac),#7c5cff,var(--ac),transparent);transform:scaleX(0);transform-origin:left;opacity:.7}
-.flow.motion-line:after{animation:flowTravel 1.8s .35s var(--motion-ease) forwards}
-@keyframes flowTravel{to{transform:scaleX(1)}}
-
 /* Animated metric numbers */
 .motion-in .st .n{animation:numberPop .7s var(--motion-ease) both}
 @keyframes numberPop{from{opacity:0;transform:scale(.55) rotate(-5deg)}70%{transform:scale(1.12) rotate(1deg)}to{opacity:1;transform:scale(1)}}
@@ -616,15 +610,43 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 /* Stronger interactive lift */
 .mode-card:hover,.job:hover,.doc:hover,.kan .col:hover,.pv:hover{box-shadow:0 22px 60px -30px color-mix(in srgb,var(--ac) 38%,transparent);}
 
-@media(max-width:860px){.hero:before{width:330px;height:330px;left:-150px}.hero:after{width:360px;height:360px;right:-180px}.flow:after{display:none}.hero .jm{animation:heroFloat 5s ease-in-out infinite,heroCardIn 1s .25s var(--motion-ease) both}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:before,.hero:after,.hero .jm,.hero h1,.hero .pill,.hero .cta .btn,.hero .grid,.hero-grid{animation:none!important}section:not(.hero)>.w{opacity:1;transform:none;transition:none}.motion-in .mode-card,.motion-in .st,.motion-in .job,.motion-in .doc,.motion-in .kan .col,.motion-in .pv,.motion-in .fin .btn{animation:none}.flow.motion-line:after{animation:none;transform:scaleX(1)}}
+@media(max-width:860px){.hero:before{width:330px;height:330px;left:-150px}.hero:after{width:360px;height:360px;right:-180px}.flow:after{display:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:before,.hero:after,.hero .jm,.hero h1,.hero .pill,.hero .cta .btn,.hero .grid,.hero-grid{animation:none!important}section:not(.hero)>.w{opacity:1;transform:none;transition:none}.motion-in .mode-card,.motion-in .st,.motion-in .job,.motion-in .doc,.motion-in .kan .col,.motion-in .pv,.motion-in .fin .btn{animation:none}}
+</style>
+
+<style id="grounded-motion-v3">
+/* Grounded premium motion — only decorative bubbles/orbs float */
+.hero{overflow:hidden}
+.hero h1{background-size:220% auto;animation:heroTitleIn .9s .08s cubic-bezier(.2,.8,.2,1) both,gradientShift 6s ease-in-out infinite alternate}
+@keyframes gradientShift{to{background-position:100% center}}
+.hero .jm{animation:heroCardIn .9s .28s cubic-bezier(.2,.8,.2,1) both}
+@keyframes heroCardIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+.cta .btn,.fin .btn{position:relative;overflow:hidden}
+.cta .btn:after,.fin .btn:after{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);animation:buttonShine 3.8s ease-in-out infinite}
+@keyframes buttonShine{0%,55%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
+.mode-card,.job,.doc,.fit .card,.kan .col{transition:transform .32s cubic-bezier(.2,.8,.2,1),border-color .32s,box-shadow .32s}
+.mode-card:hover,.job:hover,.doc:hover,.fit .card:hover,.kan .col:hover{transform:translateY(-5px)}
+.mode-card:hover{box-shadow:0 18px 45px -28px color-mix(in srgb,var(--ac) 65%,transparent)}
+.section.reveal-ready{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1)}
+.section.reveal-ready.is-visible{opacity:1;transform:none}
+.stagger-in>*{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.stagger-in.is-visible>*{opacity:1;transform:none}
+.stagger-in.is-visible>*:nth-child(2){transition-delay:.08s}.stagger-in.is-visible>*:nth-child(3){transition-delay:.16s}.stagger-in.is-visible>*:nth-child(4){transition-delay:.24s}.stagger-in.is-visible>*:nth-child(5){transition-delay:.32s}
+@media(prefers-reduced-motion:reduce){.hero h1,.hero .jm,.cta .btn:after,.fin .btn:after{animation:none!important}.section.reveal-ready,.stagger-in>*{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+
+<style id="bubbles-only-motion">
+/* Content stays grounded. Only the decorative hero bubbles/orbs move continuously. */
+.hero .jm,.mode-card,.job,.doc,.fit .card,.kan .col,.pv,.st,.fin .btn{animation-duration:initial}
+.hero .jm{animation:heroCardIn .9s .28s cubic-bezier(.2,.8,.2,1) both}
+/* The two large hero bubbles and the tiny bubble particles are the only continuously moving elements. */
 </style>
 </head>
 <body>
 <div id="pg"></div><nav id="nav"><div class="w nv">
 <a href="#top" class="lg" aria-label="Jobnora home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Jobnora</a>
 <div class="nl"><a href="#modes">How it works</a><a href="#resume">Tailoring</a><a href="#jobs">Matches</a><a href="#privacy">Privacy</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></div>
-<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme"><span class="theme-icon" id="themeIcon">☀</span><span class="theme-label" id="themeLabel">Light</span></button><button class="btn p sm" data-start>Choose your mode</button></div></nav>
+<div class="auth-user" id="navAuth"><span class="auth-user-name" id="navUserName" hidden></span><button class="btn sm" id="navDashboard" type="button" hidden>Dashboard</button><button class="btn sm" id="navLogin" type="button">Log in</button><button class="btn p sm" id="navLogout" type="button" hidden>Log out</button></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme"><span class="theme-icon" id="themeIcon">☀</span><span class="theme-label" id="themeLabel">Light</span></button><button class="btn p sm" data-start>Choose your mode</button></div></nav>
 
 <header class="hero" id="top"><div class="grid-bg"></div><div class="w">
 <span class="pill"><i class="dot"></i>Your agent is searching 12 sources right now</span>
@@ -695,10 +717,28 @@ section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
 <aside id="dr" role="dialog" aria-modal="true" aria-label="Details" aria-hidden="true"><div class="dh"><strong id="dt">Details</strong><div style="display:flex;gap:8px"><button class="btn sm" id="ext" hidden>Open externally ↗</button><button class="btn sm" id="cl" aria-label="Close">Close</button></div></div><div class="db" id="dbd"></div></aside>
 
 <style>
+
+#dashboardGate{position:fixed;inset:0;z-index:110;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:18px;overflow:auto;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}
+#dashboardGate[hidden]{display:none}
+.dashboard-box{width:min(920px,100%);max-height:min(86vh,820px);overflow:auto;padding:26px}
+.dashboard-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.dashboard-head h2{margin:5px 0 6px}.dashboard-head p{margin:0;color:var(--mu);font-size:.9rem}.dashboard-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.dash-stat{padding:18px}.dash-stat span{display:block;color:var(--mu);font-size:.8rem}.dash-stat strong{display:block;font-size:2rem;margin-top:4px}.dashboard-list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 12px}.dashboard-list-head h3{margin:0}.dashboard-list-head span{font-size:.76rem;color:var(--mu)}.dashboard-list{display:grid;gap:8px}.dash-row{display:grid;grid-template-columns:1.3fr 1fr auto;gap:16px;align-items:center;padding:15px 16px;border:1px solid var(--bd);border-radius:13px;background:var(--bg)}.dash-main b,.dash-main small{display:block}.dash-main small,.dash-meta small{color:var(--mu);font-size:.78rem;margin-top:3px}.dash-status{font-size:.76rem;font-weight:650;padding:6px 9px;border-radius:999px;background:var(--acs);color:var(--ac);white-space:nowrap}.dash-empty{padding:28px;border:1px dashed var(--bd);border-radius:13px;color:var(--mu);text-align:center}.dash-error{color:var(--err,#c0392b);background:color-mix(in srgb,#c0392b 7%,transparent);border:1px solid color-mix(in srgb,#c0392b 22%,var(--bd));padding:14px;border-radius:12px;font-size:.85rem}
+@media(max-width:700px){.dashboard-box{padding:18px}.dashboard-stats{grid-template-columns:1fr}.dash-row{grid-template-columns:1fr;gap:9px}.dash-status{justify-self:start}}
 #authGate{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.42);display:grid;place-items:center;padding:20px;overflow:auto;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}#authGate[hidden]{display:none}.auth-close{position:absolute;top:12px;right:12px}.auth-box{width:min(440px,100%);padding:28px}.auth-box h2{font-size:2rem}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:20px 0}.auth-tabs button{padding:10px;border:1px solid var(--bd);background:var(--bg);border-radius:9px}.auth-tabs button.active{background:var(--tx);color:var(--bg)}.auth-form{display:grid;gap:12px}.auth-form label{display:grid;gap:6px;font-size:.85rem;font-weight:500}.auth-form input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit}.auth-msg{min-height:20px;font-size:.82rem;color:var(--mu)}.auth-user{display:flex;align-items:center;gap:8px}.auth-user button{padding:7px 11px}.auth-user-email{font-size:.82rem;color:var(--tx);max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.auth-user button[hidden]{display:none!important}.auth-user-name{font-size:.86rem;font-weight:600;color:var(--tx);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media(max-width:760px){.auth-user-email{display:none}}@media(max-width:600px){#nav .nv{gap:8px}#nav .nl{display:none}#navAuth{margin-left:auto}.auth-user button{padding:7px 9px}.nv>.btn[data-start]{display:none}}.auth-brand{display:flex;align-items:center;gap:9px;font-weight:600;margin-bottom:22px}.auth-brand .lm{width:28px;height:28px}
 .auth-loading{display:none;position:absolute;inset:0;background:var(--bg);border-radius:inherit;align-items:center;justify-content:center;text-align:center;padding:28px;z-index:5}.auth-loading.show{display:flex}.auth-loading-inner{display:grid;justify-items:center;gap:14px}.auth-loader{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--tx);border-radius:50%;animation:authSpin .8s linear infinite}.auth-loading-title{font-weight:650;font-size:1rem}.auth-loading-sub{font-size:.84rem;color:var(--mu)}.auth-dots::after{content:'';display:inline-block;width:1.4em;text-align:left;animation:authDots 1.1s steps(4,end) infinite}@keyframes authSpin{to{transform:rotate(360deg)}}@keyframes authDots{0%{content:''}25%{content:'.'}50%{content:'..'}75%,100%{content:'...'}}
 
 </style>
+<div id="dashboardGate" hidden aria-hidden="true">
+  <div class="dashboard-box card" role="dialog" aria-modal="true" aria-labelledby="dashboardTitle">
+    <div class="dashboard-head"><div><span class="eyebrow">Your Jobnora activity</span><h2 id="dashboardTitle">Application dashboard</h2><p>Everything Jobnora has successfully emailed for your account.</p></div><button type="button" class="btn sm" id="dashboardClose" aria-label="Close">×</button></div>
+    <div class="dashboard-stats">
+      <div class="card dash-stat"><span>Emails sent</span><strong id="dashEmails">0</strong></div>
+      <div class="card dash-stat"><span>Jobs processed</span><strong id="dashJobs">0</strong></div>
+      <div class="card dash-stat"><span>Companies</span><strong id="dashCompanies">0</strong></div>
+    </div>
+    <div class="dashboard-list-head"><h3>Application history</h3><span id="dashUpdated">Loading…</span></div>
+    <div id="dashList" class="dashboard-list"><div class="dash-empty">Loading your history…</div></div>
+  </div>
+</div>
 <div id="authGate" hidden>
   <div class="auth-box card" style="position:relative">
     <button type="button" class="btn sm auth-close" id="authClose" aria-label="Close">×</button>
@@ -729,7 +769,7 @@ let authTransitioning=false;
 let authChannel=null;
 
 let authMode='login';
-const navUserName=document.getElementById('navUserName'),authNameWrap=document.getElementById('authNameWrap'),authName=document.getElementById('authName');
+const navUserName=document.getElementById('navUserName'),navDashboard=document.getElementById('navDashboard'),authNameWrap=document.getElementById('authNameWrap'),authName=document.getElementById('authName');
 function getUserDisplayName(user){
   const meta=user?.user_metadata||{};
   const name=(meta.full_name||meta.name||'').trim();
@@ -742,6 +782,7 @@ function updateNavAuth(session){
   navLogin.hidden=loggedIn;
   navLogout.hidden=!loggedIn;
   navUserName.hidden=!loggedIn;
+  if(navDashboard)navDashboard.hidden=!loggedIn;
   if(loggedIn){
     const name=getUserDisplayName(session.user);
     navUserName.textContent='Hi, '+name;
@@ -1029,6 +1070,30 @@ function start(){
       </button>
     </div>`,false);
 }
+const dashboardGate=document.getElementById('dashboardGate');
+const dashboardClose=document.getElementById('dashboardClose');
+const dashList=document.getElementById('dashList');
+function closeDashboard(){if(!dashboardGate)return;dashboardGate.hidden=true;dashboardGate.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+async function openDashboard(){
+  if(!sb)return;
+  const user=await getLoggedInUser();
+  if(!user?.id){showAuth(openDashboard);return;}
+  dashboardGate.hidden=false;dashboardGate.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  dashList.innerHTML='<div class="dash-empty">Loading your history…</div>';
+  const {data,error}=await sb.from('jobnora_applications').select('company_name,job_title,job_url,status,email_sent,email_sent_at,created_at,mode').eq('user_id',user.id).order('created_at',{ascending:false}).limit(100);
+  if(error){dashList.innerHTML='<div class="dash-error">Your activity table is not ready yet. Run the Jobnora activity SQL setup once in Supabase, then refresh this dashboard.</div>';return;}
+  const rows=data||[];
+  const emails=rows.filter(r=>r.email_sent).length;
+  const companies=new Set(rows.map(r=>String(r.company_name||'').trim()).filter(Boolean));
+  document.getElementById('dashEmails').textContent=emails;document.getElementById('dashJobs').textContent=rows.length;document.getElementById('dashCompanies').textContent=companies.size;
+  document.getElementById('dashUpdated').textContent=rows.length?'Updated just now':'No activity yet';
+  dashList.innerHTML=rows.length?rows.map(r=>{const when=new Date(r.email_sent_at||r.created_at);const date=Number.isNaN(when.getTime())?'':when.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});const company=r.company_name||'Company not listed';const title=r.job_title||'Job application';return `<div class="dash-row"><div class="dash-main"><b>${escapeHtml(company)}</b><small>${escapeHtml(title)}</small></div><div class="dash-meta"><small>${escapeHtml(date)}</small>${r.recipient_email?`<small>${escapeHtml(r.recipient_email)}</small>`:''}</div><span class="dash-status">${r.email_sent?'Resume emailed':'Processing'}</span></div>`}).join(''):'<div class="dash-empty">No emails have been recorded yet. Your first successful Jobnora email will appear here.</div>';
+}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+if(navDashboard)navDashboard.addEventListener('click',openDashboard);
+if(dashboardClose)dashboardClose.addEventListener('click',closeDashboard);
+if(dashboardGate)dashboardGate.addEventListener('click',e=>{if(e.target===dashboardGate)closeDashboard()});
+
 function submitWithAuth(action){if(window.applyPilotSession?.user?.id){action();return;}showAuth(action);}
 
 
@@ -1123,7 +1188,7 @@ function resumeFlow(){
     if(window.applyPilotSession?.user?.id)fd.append("user_id",window.applyPilotSession.user.id);
     fd.append("job_url",f.elements.jobLink.value.trim());fd.append("job_description",f.elements.jobDescription.value.trim());fd.append("resume_file",resumeFile,resumeFile.name);
     b.disabled=true;b.textContent="Sending request…";
-    try{const r=await fetch(FORM,{method:"POST",body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Resume request received","Your request has been sent to Jobnora. The tailored ATS resume will be emailed to you when processing is complete.");}
+    try{const r=await fetch(FORM,{method:"POST",headers:(window.applyPilotSession?.access_token?{Authorization:`Bearer ${window.applyPilotSession.access_token}`}:(sb?.auth?await sb.auth.getSession().then(x=>x.data.session?.access_token?{Authorization:`Bearer ${x.data.session.access_token}`}:{}) : {})),body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Resume request received","Your request has been sent to Jobnora. The tailored ATS resume will be emailed to you when processing is complete.");}
     catch(err){b.disabled=false;b.textContent="Create my ATS resume →";showFlowSubmitted("Something went wrong","We couldn't send your request right now. Please try again in a moment.");}
   }
 }
@@ -1161,7 +1226,7 @@ function advancedFlow(){
     if(window.applyPilotSession?.user?.id)fd.append("user_id",window.applyPilotSession.user.id);
     fd.append("job_sources",JSON.stringify(["linkedin"]));fd.append("job_titles",f.elements.role.value.trim());fd.append("location",f.elements.location.value.trim());fd.append("work_type",f.elements.workType.value||"Any");fd.append("experience",f.elements.experience.value.trim());fd.append("max_jobs",f.elements.maxJobs.value);fd.append("search_window",f.elements.searchWindow.value);fd.append("resume_file",resumeFile,resumeFile.name);
     b.disabled=true;b.textContent="Starting search…";
-    try{const r=await fetch(FORM,{method:"POST",body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");}
+    try{const r=await fetch(FORM,{method:"POST",headers:(window.applyPilotSession?.access_token?{Authorization:`Bearer ${window.applyPilotSession.access_token}`}:(sb?.auth?await sb.auth.getSession().then(x=>x.data.session?.access_token?{Authorization:`Bearer ${x.data.session.access_token}`}:{}) : {})),body:fd});if(!r.ok)throw new Error("Request failed");showFlowSubmitted("Advanced search started","Your search has been sent to Jobnora. Matching job links and tailored ATS resumes will be emailed to you.");}
     catch(err){b.disabled=false;b.textContent="Find my jobs →";showFlowSubmitted("Something went wrong","We couldn't start your search right now. Please try again in a moment.");}
   }
 }
@@ -1213,29 +1278,24 @@ const hj=$(".jm");if(hj&&matchMedia("(hover:hover)").matches){const h=$(".hero")
   const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{
     if(!e.isIntersecting)return;
     e.target.classList.add('motion-in');
-    if(e.target.querySelector('.flow'))e.target.querySelector('.flow').classList.add('motion-line');
     reveal.unobserve(e.target);
   }),{threshold:.14,rootMargin:'0px 0px -7% 0px'});
   sections.filter(s=>!s.classList.contains('hero')).forEach(s=>reveal.observe(s));
 
-  // Add a gentle floating particle field to the hero without touching content.
-  const hero=document.querySelector('.hero');
-  if(hero){
-    const layer=document.createElement('div');
-    layer.setAttribute('aria-hidden','true');
-    layer.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1';
-    for(let i=0;i<18;i++){
-      const p=document.createElement('i');
-      p.style.cssText=`position:absolute;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;border-radius:50%;background:var(--ac);opacity:${.12+Math.random()*.28};left:${Math.random()*100}%;top:${20+Math.random()*75}%;animation:particleFloat ${6+Math.random()*8}s ${Math.random()*-8}s ease-in-out infinite alternate`;
-      layer.appendChild(p);
-    }
-    hero.prepend(layer);
-    const st=document.createElement('style');
-    st.textContent='@keyframes particleFloat{from{transform:translate3d(0,25px,0) scale(.7);opacity:.08}to{transform:translate3d(20px,-45px,0) scale(1.4);opacity:.38}}';
-    document.head.appendChild(st);
-  }
 })();
 </script>
 
+
+<script id="grounded-motion-js">
+(function(){
+ const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+ if(reduce)return;
+ const sections=[...document.querySelectorAll('section')];
+ sections.forEach(s=>s.classList.add('reveal-ready'));
+ document.querySelectorAll('.modes,.flow,.jobs,.resume,.fit,.tracker,.privacy,.faq,.fin').forEach(x=>x.classList.add('stagger-in'));
+ const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}}),{threshold:.14});
+ document.querySelectorAll('.reveal-ready,.stagger-in').forEach(x=>io.observe(x));
+})();
+</script>
 </body>
 </html>
