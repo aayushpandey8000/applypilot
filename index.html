@@ -1,3 +1,39 @@
+Pasted text(1).txt
+Document
+this i sthe latest one 
+
+You're right — if you opened it and visually can't tell any difference, then the changes were too subtle. The previous version mostly added micro-interactions, not the kind of obvious premium animation you're expecting.
+
+I can fix that by making the front page visibly animated: hero text reveal, floating/glowing background, animated job card, scroll-triggered section reveals, moving gradient borders, animated stats, flowing “How it works” line, and stronger hover effects.
+
+I’ll work from your latest HTML and keep all existing auth, resume, n8n, responsive, and functionality unchanged.
+
+yes
+
+Done — this version has much more visible animation, not just tiny hover effects.
+
+What changed
+Hero section visibly animates in on page load
+Large moving ambient glow/orbs
+Hero job card continuously floats
+Heading has a moving gradient effect
+CTA has a visible shine sweep
+18 subtle floating particles in the hero
+Every major section now reveals as you scroll
+Cards enter with a staggered animation
+“How it works” gets a traveling animated line
+Stats/numbers pop in
+Job/resume/tracker cards have stronger lift + glow
+Background grid has subtle movement
+Mobile animations are adjusted
+prefers-reduced-motion is respected
+No changes to Supabase, auth, saved resume, n8n, forms, or backend
+New file
+
+Download Jobnora Animated V2
+
+Important: replace your currently deployed HTML with this V2 file and do a hard refresh (Ctrl + Shift + R). Otherwise the browser may keep showing the old cached version.
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -515,8 +551,111 @@ canvas {
 :root[data-theme="light"]{--bg:#F7F7F8;--bg2:#FFFFFF;--tx:#18181B;--mu:#666872;--bd:#E4E4E7;--ac:#6366F1;--acs:#EEF0FF;--ok:#16A34A;--oks:#ECFDF3;--sh:0 12px 32px -12px rgba(0,0,0,.12);color-scheme:light}
 .theme-toggle{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--bd);background:var(--bg2);color:var(--tx);border-radius:999px;padding:7px 11px;font-size:.78rem;font-weight:500;white-space:nowrap;transition:.2s}.theme-toggle:hover{border-color:var(--ac);transform:translateY(-1px)}.theme-icon{font-size:.9rem;line-height:1}.theme-label{min-width:34px;text-align:left}
 @media(max-width:860px){.theme-toggle{padding:7px 9px}.theme-label{display:none}}
+
+/* ===== Jobnora premium motion layer ===== */
+.hero{isolation:isolate}
+.hero .w{position:relative}
+.hero .pill{animation:heroPillIn .8s cubic-bezier(.2,.8,.2,1) both}
+.hero h1{animation:heroTitleIn .9s .08s cubic-bezier(.2,.8,.2,1) both}
+.hero .lead{animation:heroTextIn .8s .18s cubic-bezier(.2,.8,.2,1) both}
+.hero .cta{animation:heroTextIn .8s .28s cubic-bezier(.2,.8,.2,1) both}
+.hero .jm{animation:heroCardIn 1s .36s cubic-bezier(.2,.8,.2,1) both}
+@keyframes heroPillIn{from{opacity:0;transform:translateY(-10px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes heroTitleIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes heroTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes heroCardIn{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--ac) 7%,transparent),transparent 34%);animation:heroBreath 7s ease-in-out infinite}
+@keyframes heroBreath{50%{opacity:.55;transform:scale(1.04)}}
+.mode-card{transform-style:preserve-3d;will-change:transform}
+.mode-card .mode-icon{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.mode-card:hover .mode-icon{transform:translateY(-2px) rotate(-4deg) scale(1.06);box-shadow:0 0 0 7px var(--acs)}
+.mode-card .mode-action{transition:transform .25s,color .25s}
+.mode-card:hover .mode-action{transform:translateX(5px)}
+.st .n{will-change:transform,box-shadow}
+.st.on .n{animation:stepPulse 1.4s cubic-bezier(.2,.8,.2,1)}
+@keyframes stepPulse{0%{transform:scale(.9);box-shadow:0 0 0 0 var(--acs)}45%{transform:scale(1.08);box-shadow:0 0 0 9px color-mix(in srgb,var(--ac) 0%,transparent)}100%{transform:scale(1);}}
+.flow:before{content:"";position:absolute;left:0;right:0;top:19px;height:1px;background:linear-gradient(90deg,transparent,var(--ac),transparent);opacity:.18;transform:scaleX(0);transform-origin:left;animation:flowLine 2.4s 1s ease-out forwards}
+@keyframes flowLine{to{transform:scaleX(1)}}
+.job{will-change:transform;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.job:hover{transform:translateY(-4px) scale(1.005)}
+.doc{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
+.doc:hover{transform:translateY(-4px)}
+mark:not(.off){animation:markPop .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes markPop{from{opacity:0;transform:translateY(3px);background:transparent}to{opacity:1;transform:none}}
+.big{transition:transform .4s}.fit .card:hover .big{transform:scale(1.035)}
+.kan .col{transition:transform .35s ease,box-shadow .35s}.kan .col:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.fin .btn{transition:transform .25s,box-shadow .25s}.fin .btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px -12px rgba(0,0,0,.45)}
+#nav .lg .lm{transition:transform .35s cubic-bezier(.2,.8,.2,1),border-radius .35s}.lg:hover .lm{transform:rotate(-8deg) scale(1.08);border-radius:10px}
+@media(max-width:860px){.flow:before{display:none}}
+@media(prefers-reduced-motion:reduce){.hero .pill,.hero h1,.hero .lead,.hero .cta,.hero .jm,.hero:after{animation:none!important}.flow:before{animation:none;transform:none}.mode-card:hover .mode-icon,.mode-card:hover .mode-action,.job:hover,.doc:hover,.kan .col:hover{transform:none}.st.on .n,mark:not(.off){animation:none!important}}
+
 </style>
-<script>(function(){try{var t=localStorage.getItem("jobnora-theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();</script></head>
+<script>(function(){try{var t=localStorage.getItem("jobnora-theme");document.documentElement.setAttribute("data-theme",t==="light"?"light":"dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();</script><style>
+/* ===== VISIBLE PREMIUM ANIMATION PASS ===== */
+:root{--motion-ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+.hero{position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"";position:absolute;pointer-events:none;z-index:-1;border-radius:50%;filter:blur(8px)}
+.hero:before{width:520px;height:520px;left:-180px;top:40px;background:radial-gradient(circle,color-mix(in srgb,var(--ac) 18%,transparent) 0%,transparent 68%);animation:orbA 8s ease-in-out infinite alternate}
+.hero:after{width:620px;height:620px;right:-220px;bottom:-260px;background:radial-gradient(circle,color-mix(in srgb,#7c5cff 16%,transparent) 0%,transparent 68%);animation:orbB 10s ease-in-out infinite alternate}
+@keyframes orbA{to{transform:translate(100px,50px) scale(1.25)}}
+@keyframes orbB{to{transform:translate(-90px,-60px) scale(1.18)}}
+.hero .jm{animation:heroFloat 4.5s ease-in-out infinite,heroCardIn 1s .25s var(--motion-ease) both;will-change:transform}
+@keyframes heroFloat{0%,100%{margin-top:0}50%{margin-top:-13px}}
+.hero h1{background-size:200% auto;animation:titleReveal .9s .1s var(--motion-ease) both,gradientSweep 6s linear infinite}
+@keyframes titleReveal{from{opacity:0;transform:translateY(35px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes gradientSweep{to{background-position:200% center}}
+.hero .pill{animation:dropReveal .7s var(--motion-ease) both,pillGlow 3s 1s ease-in-out infinite}
+@keyframes dropReveal{from{opacity:0;transform:translateY(-20px) scale(.9)}to{opacity:1;transform:none}}
+@keyframes pillGlow{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--ac) 7%,transparent),0 0 30px color-mix(in srgb,var(--ac) 14%,transparent)}}
+.hero .cta .btn{position:relative;overflow:hidden;animation:ctaIn .8s .4s var(--motion-ease) both}
+.hero .cta .btn:after{content:"";position:absolute;inset:-100% 45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:rotate(18deg);animation:shine 3.5s 1.2s ease-in-out infinite}
+@keyframes ctaIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes shine{0%,65%{transform:translateX(-180%) rotate(18deg)}85%,100%{transform:translateX(180%) rotate(18deg)}}
+
+/* Sections visibly reveal as they enter the viewport */
+section:not(.hero){animation:none}
+section:not(.hero)>.w{opacity:0;transform:translateY(55px);transition:opacity .9s var(--motion-ease),transform .9s var(--motion-ease)}
+section.motion-in>.w{opacity:1;transform:none}
+section.motion-in .eyebrow{animation:eyebrowIn .7s var(--motion-ease) both}
+section.motion-in h2{animation:headingIn .85s .08s var(--motion-ease) both}
+@keyframes eyebrowIn{from{opacity:0;letter-spacing:.35em;transform:translateX(-18px)}to{opacity:1;letter-spacing:normal;transform:none}}
+@keyframes headingIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+/* Cards enter one after another */
+.motion-in .mode-card,.motion-in .st,.motion-in .job,.motion-in .doc,.motion-in .kan .col,.motion-in .pv,.motion-in .fin .btn{animation:cardRise .75s var(--motion-ease) both}
+.motion-in .mode-card:nth-child(2),.motion-in .st:nth-child(2),.motion-in .job:nth-child(2),.motion-in .doc:nth-child(2),.motion-in .kan .col:nth-child(2){animation-delay:.1s}
+.motion-in .mode-card:nth-child(3),.motion-in .st:nth-child(3),.motion-in .job:nth-child(3),.motion-in .doc:nth-child(3),.motion-in .kan .col:nth-child(3){animation-delay:.2s}
+.motion-in .mode-card:nth-child(4),.motion-in .st:nth-child(4),.motion-in .job:nth-child(4),.motion-in .doc:nth-child(4){animation-delay:.3s}
+@keyframes cardRise{from{opacity:0;transform:translateY(32px) scale(.96)}to{opacity:1;transform:none}}
+
+.mode-card{position:relative;overflow:hidden}
+.mode-card:before,.job:before,.doc:before,.kan .col:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(120deg,transparent 20%,color-mix(in srgb,var(--ac) 11%,transparent) 45%,transparent 70%);transform:translateX(-120%);transition:none;pointer-events:none}
+.motion-in .mode-card:before,.motion-in .job:before,.motion-in .doc:before,.motion-in .kan .col:before{animation:sweepCard 1.3s .35s ease-out both}
+@keyframes sweepCard{to{transform:translateX(120%)}}
+
+/* Make the How It Works progression visibly travel */
+.flow{position:relative}
+.flow:after{content:"";position:absolute;left:3%;right:3%;top:20px;height:2px;background:linear-gradient(90deg,transparent,var(--ac),#7c5cff,var(--ac),transparent);transform:scaleX(0);transform-origin:left;opacity:.7}
+.flow.motion-line:after{animation:flowTravel 1.8s .35s var(--motion-ease) forwards}
+@keyframes flowTravel{to{transform:scaleX(1)}}
+
+/* Animated metric numbers */
+.motion-in .st .n{animation:numberPop .7s var(--motion-ease) both}
+@keyframes numberPop{from{opacity:0;transform:scale(.55) rotate(-5deg)}70%{transform:scale(1.12) rotate(1deg)}to{opacity:1;transform:scale(1)}}
+
+/* Background grid subtly moves instead of staying static */
+.hero .grid,.hero-grid{animation:gridDrift 18s linear infinite}
+@keyframes gridDrift{to{background-position:80px 80px}}
+
+/* Stronger interactive lift */
+.mode-card:hover,.job:hover,.doc:hover,.kan .col:hover,.pv:hover{box-shadow:0 22px 60px -30px color-mix(in srgb,var(--ac) 38%,transparent);}
+
+@media(max-width:860px){.hero:before{width:330px;height:330px;left:-150px}.hero:after{width:360px;height:360px;right:-180px}.flow:after{display:none}.hero .jm{animation:heroFloat 5s ease-in-out infinite,heroCardIn 1s .25s var(--motion-ease) both}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:before,.hero:after,.hero .jm,.hero h1,.hero .pill,.hero .cta .btn,.hero .grid,.hero-grid{animation:none!important}section:not(.hero)>.w{opacity:1;transform:none;transition:none}.motion-in .mode-card,.motion-in .st,.motion-in .job,.motion-in .doc,.motion-in .kan .col,.motion-in .pv,.motion-in .fin .btn{animation:none}.flow.motion-line:after{animation:none;transform:scaleX(1)}}
+</style>
+</head>
 <body>
 <div id="pg"></div><nav id="nav"><div class="w nv">
 <a href="#top" class="lg" aria-label="Jobnora home"><span class="lm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg></span>Jobnora</a>
@@ -1080,5 +1219,90 @@ document.addEventListener("pointermove",e=>{const c=e.target.closest&&e.target.c
 addEventListener("scroll",()=>{$("#pg").style.width=scrollY/(document.documentElement.scrollHeight-innerHeight)*100+"%"},{passive:true});
 const hj=$(".jm");if(hj&&matchMedia("(hover:hover)").matches){const h=$(".hero");h.addEventListener("pointermove",e=>{const r=h.getBoundingClientRect();hj.style.transform=`rotateY(${((e.clientX-r.left)/r.width-.5)*6}deg) rotateX(${-((e.clientY-r.top)/r.height-.5)*4}deg)`});h.addEventListener("pointerleave",()=>hj.style.transform="")}
 </script>
+
+<script>
+/* Premium interaction layer: subtle cursor tilt + reveal staggering. */
+(function(){
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce)return;
+  document.querySelectorAll('.mode-card').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      if(!matchMedia('(hover:hover)').matches)return;
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(900px) rotateY(${x*3.5}deg) rotateX(${-y*3}deg) translateY(-3px)`;
+    },{passive:true});
+    card.addEventListener('pointerleave',()=>card.style.transform='');
+  });
+  document.querySelectorAll('.stats,.pv,.jobs,.kan').forEach(group=>{
+    [...group.children].forEach((el,i)=>el.style.transitionDelay=Math.min(i*70,350)+'ms');
+  });
+})();
+</script>
+
+<script>
+/* Visible scroll choreography */
+(function(){
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sections=[...document.querySelectorAll('section')];
+  if(reduce){sections.forEach(s=>s.classList.add('motion-in'));return;}
+  const reveal=new IntersectionObserver(entries=>entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('motion-in');
+    if(e.target.querySelector('.flow'))e.target.querySelector('.flow').classList.add('motion-line');
+    reveal.unobserve(e.target);
+  }),{threshold:.14,rootMargin:'0px 0px -7% 0px'});
+  sections.filter(s=>!s.classList.contains('hero')).forEach(s=>reveal.observe(s));
+
+  // Add a gentle floating particle field to the hero without touching content.
+  const hero=document.querySelector('.hero');
+  if(hero){
+    const layer=document.createElement('div');
+    layer.setAttribute('aria-hidden','true');
+    layer.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1';
+    for(let i=0;i<18;i++){
+      const p=document.createElement('i');
+      p.style.cssText=`position:absolute;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px;border-radius:50%;background:var(--ac);opacity:${.12+Math.random()*.28};left:${Math.random()*100}%;top:${20+Math.random()*75}%;animation:particleFloat ${6+Math.random()*8}s ${Math.random()*-8}s ease-in-out infinite alternate`;
+      layer.appendChild(p);
+    }
+    hero.prepend(layer);
+    const st=document.createElement('style');
+    st.textContent='@keyframes particleFloat{from{transform:translate3d(0,25px,0) scale(.7);opacity:.08}to{transform:translate3d(20px,-45px,0) scale(1.4);opacity:.38}}';
+    document.head.appendChild(st);
+  }
+})();
+</script>
+
 </body>
 </html>
+jobnora-animated-v2.html
+HTML
+no floats ok 
+
+Got it — no floating elements.
+
+I'll keep the animations clean and grounded: scroll reveals, text transitions, button effects, card hover/shine, animated gradients, and section transitions, but nothing that looks like it's floating around the page.
+
+yes
+
+Done. I changed it to a grounded animation style — no floating elements.
+
+This version has
+Smooth section-by-section scroll reveals
+Stronger card entrance animations
+Heading animated gradient
+CTA shine effect
+Card hover lift — only when you interact
+Staggered animations for job/resume/tracker sections
+Smooth transitions throughout
+No floating particles
+No continuously floating cards
+Mobile-safe
+Existing auth, resume upload, saved resume, forms and n8n behavior preserved
+
+Download Jobnora — No Float Animated Version
+
+After replacing the file, use Ctrl + Shift + R once to bypass the old browser cache.
+
+jobnora-animated-no-float.html
+HTML
